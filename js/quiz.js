@@ -201,9 +201,9 @@ const Quiz = function (t) {
         });
         if (s > 2) {
             resetOverlay();
-            $('#'+ t).find('.underlay').delay(300).animate({
+            $('#'+ t).find('.underlay').delay(0).animate({
                 'left' : ($($('.race').find('td')[s]).width() * -1) + 'px'
-            }, 600, function () {
+            }, 300, function () {
                 self.showOverlay(false);
             });
         }

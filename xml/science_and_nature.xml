@@ -1,0 +1,102 @@
+<quiz>
+  <question>
+    <text>What is the largest planet in our solar system?</text>
+    <options>
+      <option>Venus</option>
+      <option>Jupiter</option>
+      <option>Mars</option>
+      <option>Saturn</option>
+    </options>
+    <answer>Jupiter</answer>
+  </question>
+  <question>
+    <text>Which gas makes up the majority of Earth's atmosphere?</text>
+    <options>
+      <option>Oxygen</option>
+      <option>Nitrogen</option>
+      <option>Carbon dioxide</option>
+      <option>Helium</option>
+    </options>
+    <answer>Nitrogen</answer>
+  </question>
+  <question>
+    <text>What is the largest organ in the human body?</text>
+    <options>
+      <option>Liver</option>
+      <option>Brain</option>
+      <option>Heart</option>
+      <option>Skin</option>
+    </options>
+    <answer>Skin</answer>
+  </question>
+  <question>
+    <text>Which scientist is credited with discovering the theory of general relativity?</text>
+    <options>
+      <option>Isaac Newton</option>
+      <option>Albert Einstein</option>
+      <option>Charles Darwin</option>
+      <option>Nikola Tesla</option>
+    </options>
+    <answer>Albert Einstein</answer>
+  </question>
+  <question>
+    <text>What is the smallest unit of matter?</text>
+    <options>
+      <option>Atom</option>
+      <option>Molecule</option>
+      <option>Cell</option>
+      <option>Particle</option>
+    </options>
+    <answer>Atom</answer>
+  </question>
+  <question>
+    <text>What is the process by which plants convert sunlight into energy?</text>
+    <options>
+      <option>Respiration</option>
+      <option>Photosynthesis</option>
+      <option>Fermentation</option>
+      <option>Transpiration</option>
+    </options>
+    <answer>Photosynthesis</answer>
+  </question>
+  <question>
+    <text>Which element is the most abundant in the Earth's crust?</text>
+    <options>
+      <option>Oxygen</option>
+      <option>Carbon</option>
+      <option>Iron</option>
+      <option>Silicon</option>
+    </options>
+    <answer>Oxygen</answer>
+  </question>
+  <question>
+    <text>What is the process by which a solid changes directly into a gas without becoming a liquid first?</text>
+    <options>
+      <option>Evaporation</option>
+      <option>Condensation</option>
+      <option>Sublimation</option>
+      <option>Freezing</option>
+    </options>
+    <answer>Sublimation</answer>
+  </question>
+  <question>
+    <text>Which planet is known as the "Red Planet"?</text>
+    <options>
+      <option>Venus</option>
+      <option>Mars</option>
+      <option>Neptune</option>
+      <option>Uranus</option>
+    </options>
+    <answer>Mars</answer>
+  </question>
+  <question>
+    <text>What is the process by which plants release water vapor through their leaves?</text>
+    <options>
+      <option>Transpiration</option>
+      <option>Condensation</option>
+      <option>Evaporation</option>
+      <option>Precipitation</option>
+    </options>
+    <answer>Transpiration</answer>
+  </question>
+</quiz>

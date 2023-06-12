@@ -1,0 +1,111 @@
+<quiz>
+  <question>
+    <text>Which sport is known as "The Beautiful Game"?</text>
+    <options>
+      <option>Football</option>
+      <option>Tennis</option>
+      <option>Golf</option>
+      <option>Cricket</option>
+    </options>
+    <answer>Football</answer>
+  </question>
+
+  <question>
+    <text>Which country won the 2018 FIFA World Cup?</text>
+    <options>
+      <option>France</option>
+      <option>Germany</option>
+      <option>Brazil</option>
+      <option>Spain</option>
+    </options>
+    <answer>France</answer>
+  </question>
+
+  <question>
+    <text>What is the highest score possible in a single frame in a game of bowling?</text>
+    <options>
+      <option>10</option>
+      <option>20</option>
+      <option>30</option>
+      <option>40</option>
+    </options>
+    <answer>30</answer>
+  </question>
+
+  <question>
+    <text>Which country is famous for inventing the sport of cricket?</text>
+    <options>
+      <option>England</option>
+      <option>Australia</option>
+      <option>India</option>
+      <option>South Africa</option>
+    </options>
+    <answer>England</answer>
+  </question>
+
+  <question>
+    <text>Which player has won the most Grand Slam titles in tennis history?</text>
+    <options>
+      <option>Roger Federer</option>
+      <option>Rafael Nadal</option>
+      <option>Novak Djokovic</option>
+      <option>Serena Williams</option>
+    </options>
+    <answer>Novak Djokovic</answer>
+  </question>
+
+  <question>
+    <text>In which city are the headquarters of the International Olympic Committee (IOC) located?</text>
+    <options>
+      <option>Lausanne</option>
+      <option>Geneva</option>
+      <option>London</option>
+      <option>Paris</option>
+    </options>
+    <answer>Lausanne</answer>
+  </question>
+
+  <question>
+    <text>What is the national sport of Japan?</text>
+    <options>
+      <option>Sumo wrestling</option>
+      <option>Judo</option>
+      <option>Karate</option>
+      <option>Kendo</option>
+    </options>
+    <answer>Sumo wrestling</answer>
+  </question>
+
+  <question>
+    <text>Which country is known for inventing the game of basketball?</text>
+    <options>
+      <option>United States</option>
+      <option>Canada</option>
+      <option>Australia</option>
+      <option>United Kingdom</option>
+    </options>
+    <answer>United States</answer>
+  </question>
+
+  <question>
+    <text>What is the maximum number of players on a volleyball team?</text>
+    <options>
+      <option>6</option>
+      <option>8</option>
+      <option>10</option>
+      <option>12</option>
+    </options>
+    <answer>6</answer>
+  </question>
+
+  <question>
+    <text>Which game uses a shuttlecock?</text>
+    <options>
+      <option>Badminton</option>
+      <option>Tennis</option>
+      <option>Ping pong</option>
+      <option>Squash</option>
+    </options>
+    <answer>Badminton</answer>
+  </question>
+</quiz>

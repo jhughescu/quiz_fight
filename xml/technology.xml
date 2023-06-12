@@ -1,0 +1,102 @@
+<quiz>
+  <question>
+    <text>What does CPU stand for?</text>
+    <options>
+      <option>Central Processing Unit</option>
+      <option>Computer Personal Unit</option>
+      <option>Central Personal Unit</option>
+      <option>Computer Processing Unit</option>
+    </options>
+    <answer>Central Processing Unit</answer>
+  </question>
+  <question>
+    <text>What does HTML stand for?</text>
+    <options>
+      <option>Hypertext Markup Language</option>
+      <option>Hyperlink Markup Language</option>
+      <option>Home Tool Markup Language</option>
+      <option>Hierarchical Textual Markup Language</option>
+    </options>
+    <answer>Hypertext Markup Language</answer>
+  </question>
+  <question>
+    <text>What is the smallest unit of digital information?</text>
+    <options>
+      <option>Bit</option>
+      <option>Byte</option>
+      <option>Megabyte</option>
+      <option>Gigabyte</option>
+    </options>
+    <answer>Bit</answer>
+  </question>
+  <question>
+    <text>What programming language is known for its use in creating web applications and dynamic websites?</text>
+    <options>
+      <option>JavaScript</option>
+      <option>Python</option>
+      <option>C++</option>
+      <option>Java</option>
+    </options>
+    <answer>JavaScript</answer>
+  </question>
+  <question>
+    <text>Which company developed the first commercial microprocessor, the Intel 4004?</text>
+    <options>
+      <option>Intel</option>
+      <option>IBM</option>
+      <option>Microsoft</option>
+      <option>Apple</option>
+    </options>
+    <answer>Intel</answer>
+  </question>
+  <question>
+    <text>What does VPN stand for?</text>
+    <options>
+      <option>Virtual Private Network</option>
+      <option>Virtual Public Network</option>
+      <option>Very Personal Network</option>
+      <option>Visual Processing Node</option>
+    </options>
+    <answer>Virtual Private Network</answer>
+  </question>
+  <question>
+    <text>What is the process of converting analog signals into digital data called?</text>
+    <options>
+      <option>Analog-to-Digital Conversion</option>
+      <option>Digital-to-Analog Conversion</option>
+      <option>Analog-Digital Shifting</option>
+      <option>Data Digitization</option>
+    </options>
+    <answer>Analog-to-Digital Conversion</answer>
+  </question>
+  <question>
+    <text>What is the name of the open-source operating system based on the Linux kernel?</text>
+    <options>
+      <option>Ubuntu</option>
+      <option>Windows</option>
+      <option>macOS</option>
+      <option>Android</option>
+    </options>
+    <answer>Ubuntu</answer>
+  </question>
+  <question>
+    <text>What is the primary function of an SSD (Solid State Drive) in a computer?</text>
+    <options>
+      <option>Storage of data</option>
+      <option>Processing calculations</option>
+      <option>Display of visuals</option>
+      <option>Power supply to components</option>
+    </options>
+    <answer>Storage of data</answer>
+  </question>
+  <question>
+    <text>What is the term for a computer network that spans a relatively large geographical area, connecting multiple smaller networks?</text>
+    <options>
+      <option>Wide Area Network (WAN)</option>
+      <option>Local Area Network (LAN)</option>
+      <option>Metropolitan Area Network (MAN)</option>
+      <option>Personal Area Network (PAN)</option>
+    </options>
+    <answer>Wide Area Network (WAN)</answer>
+  </question>
+</quiz>

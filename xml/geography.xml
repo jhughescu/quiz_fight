@@ -1,0 +1,102 @@
+<quiz>
+  <question>
+    <text>What is the capital city of France?</text>
+    <options>
+      <option>Paris</option>
+      <option>London</option>
+      <option>Rome</option>
+      <option>Madrid</option>
+    </options>
+    <answer>Paris</answer>
+  </question>
+  <question>
+    <text>Which continent is the largest by land area?</text>
+    <options>
+      <option>Asia</option>
+      <option>Africa</option>
+      <option>North America</option>
+      <option>South America</option>
+    </options>
+    <answer>Asia</answer>
+  </question>
+  <question>
+    <text>What is the longest river in the world?</text>
+    <options>
+      <option>Nile</option>
+      <option>Amazon</option>
+      <option>Yangtze</option>
+      <option>Mississippi</option>
+    </options>
+    <answer>Nile</answer>
+  </question>
+  <question>
+    <text>Which country is known as the "Land of the Rising Sun"?</text>
+    <options>
+      <option>Japan</option>
+      <option>China</option>
+      <option>South Korea</option>
+      <option>Australia</option>
+    </options>
+    <answer>Japan</answer>
+  </question>
+  <question>
+    <text>What is the largest desert in the world?</text>
+    <options>
+      <option>Sahara Desert</option>
+      <option>Gobi Desert</option>
+      <option>Arabian Desert</option>
+      <option>Australian Desert</option>
+    </options>
+    <answer>Sahara Desert</answer>
+  </question>
+  <question>
+    <text>Which mountain range is located in South America?</text>
+    <options>
+      <option>Andes</option>
+      <option>Himalayas</option>
+      <option>Rocky Mountains</option>
+      <option>Alps</option>
+    </options>
+    <answer>Andes</answer>
+  </question>
+  <question>
+    <text>What is the largest ocean in the world?</text>
+    <options>
+      <option>Pacific Ocean</option>
+      <option>Atlantic Ocean</option>
+      <option>Indian Ocean</option>
+      <option>Arctic Ocean</option>
+    </options>
+    <answer>Pacific Ocean</answer>
+  </question>
+  <question>
+    <text>Which city is located on two continents?</text>
+    <options>
+      <option>Istanbul</option>
+      <option>Cairo</option>
+      <option>Rome</option>
+      <option>Athens</option>
+    </options>
+    <answer>Istanbul</answer>
+  </question>
+  <question>
+    <text>Which country is home to the Great Barrier Reef?</text>
+    <options>
+      <option>Australia</option>
+      <option>Brazil</option>
+      <option>Thailand</option>
+      <option>Canada</option>
+    </options>
+    <answer>Australia</answer>
+  </question>
+  <question>
+    <text>What is the capital city of Russia?</text>
+    <options>
+      <option>Moscow</option>
+      <option>St. Petersburg</option>
+      <option>Sochi</option>
+      <option>Kazan</option>
+    </options>
+    <answer>Moscow</answer>
+  </question>
+</quiz>

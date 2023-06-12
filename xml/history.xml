@@ -1,0 +1,102 @@
+<quiz>
+  <question>
+    <text>Who was the first President of the United States?</text>
+    <options>
+      <option>Thomas Jefferson</option>
+      <option>George Washington</option>
+      <option>John Adams</option>
+      <option>Abraham Lincoln</option>
+    </options>
+    <answer>George Washington</answer>
+  </question>
+  <question>
+    <text>Which famous explorer is credited with discovering America?</text>
+    <options>
+      <option>Christopher Columbus</option>
+      <option>Amerigo Vespucci</option>
+      <option>Vasco da Gama</option>
+      <option>Ferdinand Magellan</option>
+    </options>
+    <answer>Christopher Columbus</answer>
+  </question>
+  <question>
+    <text>In which year did World War I begin?</text>
+    <options>
+      <option>1914</option>
+      <option>1918</option>
+      <option>1939</option>
+      <option>1945</option>
+    </options>
+    <answer>1914</answer>
+  </question>
+  <question>
+    <text>Who wrote the "I Have a Dream" speech?</text>
+    <options>
+      <option>Martin Luther King Jr.</option>
+      <option>John F. Kennedy</option>
+      <option>Abraham Lincoln</option>
+      <option>Winston Churchill</option>
+    </options>
+    <answer>Martin Luther King Jr.</answer>
+  </question>
+  <question>
+    <text>Which country was responsible for the construction of the Great Wall?</text>
+    <options>
+      <option>China</option>
+      <option>India</option>
+      <option>Egypt</option>
+      <option>Italy</option>
+    </options>
+    <answer>China</answer>
+  </question>
+  <question>
+    <text>Who was the first woman to win the Nobel Prize?</text>
+    <options>
+      <option>Marie Curie</option>
+      <option>Rosa Parks</option>
+      <option>Amelia Earhart</option>
+      <option>Indira Gandhi</option>
+    </options>
+    <answer>Marie Curie</answer>
+  </question>
+  <question>
+    <text>In which year did the American Civil War end?</text>
+    <options>
+      <option>1865</option>
+      <option>1776</option>
+      <option>1812</option>
+      <option>1918</option>
+    </options>
+    <answer>1865</answer>
+  </question>
+  <question>
+    <text>Which event marked the beginning of World War II?</text>
+    <options>
+      <option>Invasion of Poland</option>
+      <option>Bombing of Pearl Harbor</option>
+      <option>Battle of Stalingrad</option>
+      <option>Dropping of the Atomic Bomb</option>
+    </options>
+    <answer>Invasion of Poland</answer>
+  </question>
+  <question>
+    <text>Who painted the Mona Lisa?</text>
+    <options>
+      <option>Leonardo da Vinci</option>
+      <option>Pablo Picasso</option>
+      <option>Vincent van Gogh</option>
+      <option>Michelangelo</option>
+    </options>
+    <answer>Leonardo da Vinci</answer>
+  </question>
+  <question>
+    <text>When did the French Revolution take place?</text>
+    <options>
+      <option>1789-1799</option>
+      <option>1607-1611</option>
+      <option>1914-1918</option>
+      <option>1837-1901</option>
+    </options>
+    <answer>1789-1799</answer>
+  </question>
+</quiz>

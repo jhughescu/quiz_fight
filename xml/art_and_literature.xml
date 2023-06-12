@@ -1,0 +1,102 @@
+<quiz>
+  <question>
+    <text>Who painted the famous artwork "The Starry Night"?</text>
+    <options>
+      <option>Pablo Picasso</option>
+      <option>Vincent van Gogh</option>
+      <option>Leonardo da Vinci</option>
+      <option>Claude Monet</option>
+    </options>
+    <answer>Vincent van Gogh</answer>
+  </question>
+  <question>
+    <text>Which author wrote the novel "Pride and Prejudice"?</text>
+    <options>
+      <option>Jane Austen</option>
+      <option>Charles Dickens</option>
+      <option>William Shakespeare</option>
+      <option>F. Scott Fitzgerald</option>
+    </options>
+    <answer>Jane Austen</answer>
+  </question>
+  <question>
+    <text>Who is the author of the famous play "Romeo and Juliet"?</text>
+    <options>
+      <option>William Shakespeare</option>
+      <option>Tennessee Williams</option>
+      <option>Arthur Miller</option>
+      <option>Oscar Wilde</option>
+    </options>
+    <answer>William Shakespeare</answer>
+  </question>
+  <question>
+    <text>Who painted the famous artwork "The Mona Lisa"?</text>
+    <options>
+      <option>Leonardo da Vinci</option>
+      <option>Michelangelo</option>
+      <option>Pablo Picasso</option>
+      <option>Vincent van Gogh</option>
+    </options>
+    <answer>Leonardo da Vinci</answer>
+  </question>
+  <question>
+    <text>Which author wrote the novel "To Kill a Mockingbird"?</text>
+    <options>
+      <option>Harper Lee</option>
+      <option>F. Scott Fitzgerald</option>
+      <option>Mark Twain</option>
+      <option>George Orwell</option>
+    </options>
+    <answer>Harper Lee</answer>
+  </question>
+  <question>
+    <text>Who is the author of the famous play "Hamlet"?</text>
+    <options>
+      <option>William Shakespeare</option>
+      <option>Tennessee Williams</option>
+      <option>Arthur Miller</option>
+      <option>Samuel Beckett</option>
+    </options>
+    <answer>William Shakespeare</answer>
+  </question>
+  <question>
+    <text>Who painted the famous artwork "The Last Supper"?</text>
+    <options>
+      <option>Leonardo da Vinci</option>
+      <option>Pablo Picasso</option>
+      <option>Vincent van Gogh</option>
+      <option>Rembrandt</option>
+    </options>
+    <answer>Leonardo da Vinci</answer>
+  </question>
+  <question>
+    <text>Which author wrote the novel "1984"?</text>
+    <options>
+      <option>George Orwell</option>
+      <option>Aldous Huxley</option>
+      <option>Ray Bradbury</option>
+      <option>J.K. Rowling</option>
+    </options>
+    <answer>George Orwell</answer>
+  </question>
+  <question>
+    <text>Who is the author of the famous play "Macbeth"?</text>
+    <options>
+      <option>William Shakespeare</option>
+      <option>Tennessee Williams</option>
+      <option>Arthur Miller</option>
+      <option>Samuel Beckett</option>
+    </options>
+    <answer>William Shakespeare</answer>
+  </question>
+  <question>
+    <text>Who painted the famous artwork "The Scream"?</text>
+    <options>
+      <option>Edvard Munch</option>
+      <option>Pablo Picasso</option>
+      <option>Salvador Dalí</option>
+      <option>Vincent van Gogh</option>
+    </options>
+    <answer>Edvard Munch</answer>
+  </question>
+</quiz>

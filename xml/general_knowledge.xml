@@ -1,0 +1,102 @@
+<quiz>
+  <question>
+    <text>Which planet is known as the "Red Planet"?</text>
+    <options>
+      <option>Venus</option>
+      <option>Mars</option>
+      <option>Jupiter</option>
+      <option>Saturn</option>
+    </options>
+    <answer>Mars</answer>
+  </question>
+  <question>
+    <text>What is the chemical symbol for the element gold?</text>
+    <options>
+      <option>Ag</option>
+      <option>Au</option>
+      <option>Ga</option>
+      <option>Fe</option>
+    </options>
+    <answer>Au</answer>
+  </question>
+  <question>
+    <text>Who painted the Mona Lisa?</text>
+    <options>
+      <option>Pablo Picasso</option>
+      <option>Vincent van Gogh</option>
+      <option>Leonardo da Vinci</option>
+      <option>Michelangelo</option>
+    </options>
+    <answer>Leonardo da Vinci</answer>
+  </question>
+  <question>
+    <text>What is the capital city of Australia?</text>
+    <options>
+      <option>Melbourne</option>
+      <option>Sydney</option>
+      <option>Canberra</option>
+      <option>Brisbane</option>
+    </options>
+    <answer>Canberra</answer>
+  </question>
+  <question>
+    <text>Which instrument has 88 keys?</text>
+    <options>
+      <option>Guitar</option>
+      <option>Piano</option>
+      <option>Trumpet</option>
+      <option>Violin</option>
+    </options>
+    <answer>Piano</answer>
+  </question>
+  <question>
+    <text>What is the largest ocean on Earth?</text>
+    <options>
+      <option>Atlantic Ocean</option>
+      <option>Indian Ocean</option>
+      <option>Arctic Ocean</option>
+      <option>Pacific Ocean</option>
+    </options>
+    <answer>Pacific Ocean</answer>
+  </question>
+  <question>
+    <text>Who wrote the novel "To Kill a Mockingbird"?</text>
+    <options>
+      <option>Mark Twain</option>
+      <option>Harper Lee</option>
+      <option>Charles Dickens</option>
+      <option>Jane Austen</option>
+    </options>
+    <answer>Harper Lee</answer>
+  </question>
+  <question>
+    <text>What is the largest organ in the human body?</text>
+    <options>
+      <option>Liver</option>
+      <option>Brain</option>
+      <option>Heart</option>
+      <option>Skin</option>
+    </options>
+    <answer>Skin</answer>
+  </question>
+  <question>
+    <text>Which country is known for inventing pizza?</text>
+    <options>
+      <option>Italy</option>
+      <option>France</option>
+      <option>Spain</option>
+      <option>United States</option>
+    </options>
+    <answer>Italy</answer>
+  </question>
+  <question>
+    <text>Who was the Greek god of the sea?</text>
+    <options>
+      <option>Apollo</option>
+      <option>Poseidon</option>
+      <option>Hermes</option>
+      <option>Zeus</option>
+    </options>
+    <answer>Poseidon</answer>
+  </question>
+</quiz>

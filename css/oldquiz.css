@@ -1,0 +1,65 @@
+
+
+/*
+.optionNO {
+    background-color: #172d8d;
+    width: 300px;
+    padding: 8px;
+    margin: 4px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+*/
+.inactive {
+    cursor: default;
+    pointer-events: none;
+}
+.question .cheat {
+    color: #207abc;
+}
+
+/*
+.overlay .buttonno {
+    display: table-cell;
+    padding: 10px 40px;
+    margin: 0px;
+    border: 10px solid #01af0e;
+    border-radius: 15px;
+    position: absolute;
+    cursor: pointer;
+}
+*/
+.overlay .button.steal {
+/*    right: 10px;*/
+/*    opacity: 0;*/
+}
+
+.overlay .button.inactive {
+    background-color: #5b605d;
+}
+.player td {
+    background-color: #124055;
+    width: 80px;
+    height: 10px;
+}
+.bar {
+    background-color: #289fcc;
+    height: 100%;
+    width: 0%;
+}
+.victory {
+    background-color: #11f508;
+    pointer-events: none;
+}
+.bar.victory {
+    background-color: #00e2ff;
+    background-color: #39e6fc;
+/*    background-color: #ffffff;*/
+}
+.defeat {
+    background-color: #623b18;
+    pointer-events: none;
+}
+.dunne {
+    opacity: 0.5;
+}

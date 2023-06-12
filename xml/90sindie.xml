@@ -1,0 +1,102 @@
+<quiz>
+  <question>
+    <text>Which band released the hit single "Common People" in 1995?</text>
+    <options>
+      <option>Oasis</option>
+      <option>Pulp</option>
+      <option>Blur</option>
+      <option>Suede</option>
+    </options>
+    <answer>Pulp</answer>
+  </question>
+  <question>
+    <text>What is the debut album of Radiohead, released in 1993?</text>
+    <options>
+      <option>The Bends</option>
+      <option>OK Computer</option>
+      <option>Pablo Honey</option>
+      <option>Kid A</option>
+    </options>
+    <answer>Pablo Honey</answer>
+  </question>
+  <question>
+    <text>Which British band released the album "Definitely Maybe" in 1994?</text>
+    <options>
+      <option>Oasis</option>
+      <option>Pulp</option>
+      <option>Blur</option>
+      <option>Suede</option>
+    </options>
+    <answer>Oasis</answer>
+  </question>
+  <question>
+    <text>What is the name of the British band led by Damon Albarn that released the album "Parklife" in 1994?</text>
+    <options>
+      <option>Oasis</option>
+      <option>Pulp</option>
+      <option>Blur</option>
+      <option>Suede</option>
+    </options>
+    <answer>Blur</answer>
+  </question>
+  <question>
+    <text>Which British band released the hit single "Bittersweet Symphony" in 1997?</text>
+    <options>
+      <option>The Verve</option>
+      <option>Suede</option>
+      <option>Pulp</option>
+      <option>Oasis</option>
+    </options>
+    <answer>The Verve</answer>
+  </question>
+  <question>
+    <text>What is the name of the British band that released the album "The Holy Bible" in 1994?</text>
+    <options>
+      <option>Manic Street Preachers</option>
+      <option>Ride</option>
+      <option>Suede</option>
+      <option>Supergrass</option>
+    </options>
+    <answer>Manic Street Preachers</answer>
+  </question>
+  <question>
+    <text>Which British band released the hit single "Creep" in 1993?</text>
+    <options>
+      <option>Radiohead</option>
+      <option>Oasis</option>
+      <option>Pulp</option>
+      <option>Suede</option>
+    </options>
+    <answer>Radiohead</answer>
+  </question>
+  <question>
+    <text>What is the name of the British band that released the album "Different Class" in 1995?</text>
+    <options>
+      <option>Pulp</option>
+      <option>Oasis</option>
+      <option>Blur</option>
+      <option>Suede</option>
+    </options>
+    <answer>Pulp</answer>
+  </question>
+  <question>
+    <text>Which British band released the hit single "Girls & Boys" in 1994?</text>
+    <options>
+      <option>Blur</option>
+      <option>Oasis</option>
+      <option>Pulp</option>
+      <option>Suede</option>
+    </options>
+    <answer>Blur</answer>
+  </question>
+  <question>
+    <text>What is the name of the British band that released the album "Dog Man Star" in 1994?</text>
+    <options>
+      <option>Suede</option>
+      <option>Oasis</option>
+      <option>Pulp</option>
+      <option>Blur</option>
+    </options>
+    <answer>Suede</answer>
+  </question>
+</quiz>

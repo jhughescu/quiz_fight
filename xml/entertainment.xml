@@ -1,0 +1,212 @@
+<quiz>
+  <question>
+    <text>What is the name of the British science fiction TV show featuring a time-traveling alien called The Doctor?</text>
+    <options>
+      <option>Doctor Who</option>
+      <option>Torchwood</option>
+      <option>Black Mirror</option>
+      <option>Sherlock</option>
+    </options>
+    <answer>Doctor Who</answer>
+  </question>
+  <question>
+    <text>Which British actor portrayed James Bond in the film "Skyfall"?</text>
+    <options>
+      <option>Daniel Craig</option>
+      <option>Pierce Brosnan</option>
+      <option>Sean Connery</option>
+      <option>Roger Moore</option>
+    </options>
+    <answer>Daniel Craig</answer>
+  </question>
+  <question>
+    <text>What is the highest-grossing British film of all time?</text>
+    <options>
+      <option>Harry Potter and the Deathly Hallows – Part 2</option>
+      <option>Skyfall</option>
+      <option>The King's Speech</option>
+      <option>Avatar</option>
+    </options>
+    <answer>Harry Potter and the Deathly Hallows – Part 2</answer>
+  </question>
+  <question>
+    <text>Which British comedian hosted "The Late Late Show" in the United States?</text>
+    <options>
+      <option>James Corden</option>
+      <option>John Oliver</option>
+      <option>Ricky Gervais</option>
+      <option>Stephen Fry</option>
+    </options>
+    <answer>James Corden</answer>
+  </question>
+  <question>
+    <text>What is the name of the fictional British country estate featured in the TV series "Downton Abbey"?</text>
+    <options>
+      <option>Highclere Castle</option>
+      <option>Blenheim Palace</option>
+      <option>Chatsworth House</option>
+      <option>Windsor Castle</option>
+    </options>
+    <answer>Highclere Castle</answer>
+  </question>
+  <question>
+    <text>Which British musician released the album "21" in 2011, featuring the hit song "Rolling in the Deep"?</text>
+    <options>
+      <option>Adele</option>
+      <option>Ed Sheeran</option>
+      <option>Sam Smith</option>
+      <option>George Ezra</option>
+    </options>
+    <answer>Adele</answer>
+  </question>
+  <question>
+    <text>In the TV show "Sherlock," what is Sherlock Holmes' address in London?</text>
+    <options>
+      <option>221B Baker Street</option>
+      <option>10 Downing Street</option>
+      <option>221C Baker Street</option>
+      <option>221A Baker Street</option>
+    </options>
+    <answer>221B Baker Street</answer>
+  </question>
+  <question>
+    <text>Who created the animated TV series "Wallace and Gromit"?</text>
+    <options>
+      <option>Nick Park</option>
+      <option>Aardman Animations</option>
+      <option>Peter Lord</option>
+      <option>Richard Starzak</option>
+    </options>
+    <answer>Nick Park</answer>
+  </question>
+  <question>
+    <text>Which British actress played the role of Hermione Granger in the "Harry Potter" film series?</text>
+    <options>
+      <option>Emma Watson</option>
+      <option>Keira Knightley</option>
+      <option>Judi Dench</option>
+      <option>Helena Bonham Carter</option>
+    </options>
+    <answer>Emma Watson</answer>
+  </question>
+  <question>
+    <text>What is the name of the British reality TV show where celebrities learn various dance routines and compete against each other?</text>
+    <options>
+      <option>Strictly Come Dancing</option>
+      <option>The X Factor</option>
+      <option>Britain's Got Talent</option>
+      <option>The Great British Bake Off</option>
+    </options>
+    <answer>Strictly Come Dancing</answer>
+  </question>
+  <question>
+    <text>Which British actor played the character Severus Snape in the "Harry Potter" film series?</text>
+    <options>
+      <option>Alan Rickman</option>
+      <option>Tom Hiddleston</option>
+      <option>Colin Firth</option>
+      <option>Benedict Cumberbatch</option>
+    </options>
+    <answer>Alan Rickman</answer>
+  </question>
+  <question>
+    <text>Which British TV show follows the lives of six friends living in London and ran from 1994 to 2004?</text>
+    <options>
+      <option>Friends</option>
+      <option>The Office</option>
+      <option>Peep Show</option>
+      <option>Spaced</option>
+    </options>
+    <answer>Friends</answer>
+  </question>
+  <question>
+    <text>What is the name of the British rock band known for hits like "Clocks," "Yellow," and "Viva la Vida"?</text>
+    <options>
+      <option>Coldplay</option>
+      <option>Muse</option>
+      <option>Oasis</option>
+      <option>Radiohead</option>
+    </options>
+    <answer>Coldplay</answer>
+  </question>
+  <question>
+    <text>Which British actress played the role of Queen Elizabeth II in the TV series "The Crown"?</text>
+    <options>
+      <option>Claire Foy</option>
+      <option>Olivia Colman</option>
+      <option>Helena Bonham Carter</option>
+      <option>Helen Mirren</option>
+    </options>
+    <answer>Claire Foy</answer>
+  </question>
+  <question>
+    <text>Who wrote the famous play "Romeo and Juliet"?</text>
+    <options>
+      <option>William Shakespeare</option>
+      <option>Arthur Miller</option>
+      <option>Oscar Wilde</option>
+      <option>George Bernard Shaw</option>
+    </options>
+    <answer>William Shakespeare</answer>
+  </question>
+  <question>
+    <text>Which British actress played the character of Mary Poppins in the 1964 film?</text>
+    <options>
+      <option>Julie Andrews</option>
+      <option>Emma Thompson</option>
+      <option>Keira Knightley</option>
+      <option>Helena Bonham Carter</option>
+    </options>
+    <answer>Julie Andrews</answer>
+  </question>
+  <question>
+    <text>What is the name of the British crime drama TV series set in Birmingham, England, after World War I?</text>
+    <options>
+      <option>Peaky Blinders</option>
+      <option>Line of Duty</option>
+      <option>Broadchurch</option>
+      <option>The Fall</option>
+    </options>
+    <answer>Peaky Blinders</answer>
+  </question>
+  <question>
+    <text>Which British actor played the character Gandalf in "The Lord of the Rings" film trilogy?</text>
+    <options>
+      <option>Ian McKellen</option>
+      <option>Michael Caine</option>
+      <option>Anthony Hopkins</option>
+      <option>Ralph Fiennes</option>
+    </options>
+    <answer>Ian McKellen</answer>
+  </question>
+  <question>
+    <text>What is the name of the British sketch comedy TV show that stars Rowan Atkinson as the title character?</text>
+    <options>
+      <option>Mr. Bean</option>
+      <option>Blackadder</option>
+      <option>The Office</option>
+      <option>Fawlty Towers</option>
+    </options>
+    <answer>Mr. Bean</answer>
+  </question>
+  <question>
+    <text>Which British actress portrayed Queen Elizabeth I in the film "Elizabeth" and its sequel?</text>
+    <options>
+      <option>Cate Blanchett</option>
+      <option>Judi Dench</option>
+      <option>Kate Winslet</option>
+      <option>Emma Thompson</option>
+    </options>
+    <answer>Cate Blanchett</answer>
+  </question>
+  <question>
+    <text>What is the name of the British singing competition TV show that spawned the band One Direction?</text>
+    <options>
+      <option>The X Factor</option>
+      <option>The Voice UK</option>
+      <option>Britain's Got Talent</option>
+      <option>Pop Idol</option>
+    </options>
+    <answer>The X Factor</answer>
+  </question>
+</quiz>

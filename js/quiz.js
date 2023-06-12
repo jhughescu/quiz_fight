@@ -196,6 +196,11 @@ const Quiz = function (t) {
         return s;
     }
     function advancePlayer () {
+//        console.log('advancePlayer' + self.iWon());
+        if (self.iWon()) {
+            console.log('no more');
+            return;
+        }
         let s = self.score;
         let x = $($('.race').find('td')[s]).offset().left;
         $('#'+ t).animate({
@@ -235,6 +240,9 @@ const Quiz = function (t) {
     }
     function setAutoComplete (boo) {
         self.autoComplete = boo;
+    }
+    function isFinalQuestion () {
+        return self.getWinTotal() - self.score === 1;
     }
     self.setAutoComplete = setAutoComplete;
     self.setQuizType = setQuizType;
@@ -282,6 +290,10 @@ const Quiz = function (t) {
 //        console.log('auto ' + self.autoComplete, t);
         var s, a;
         self.q = self.currentQuestions.shift();
+        if (self.iWon()) {
+            console.log('i won, so stop here')
+            return;
+        }
         if (!self.q) {
             self.currentQuestions = getQuestionSet(self.qID);
             self.askQuestion();
@@ -350,6 +362,12 @@ const Quiz = function (t) {
         }
     }
     self.showOverlay = function (boo) {
+        if (boo) {
+//            console.log('showOverlay: ' + isFinalQuestion());
+            if(isFinalQuestion()) {
+                return;
+            }
+        }
         let olay = $('#' + t).find('.overlay');
         let ulay = $('#' + t).find('.underlay');
         let l = null;
@@ -384,13 +402,15 @@ const Quiz = function (t) {
         }
     };
     self.submit = function (boo) {
-//        console.log(`submit ${boo}`)
+//        console.log(`submit ${boo}`);
+//        console.log(`submit ${isFinalQuestion()}`)
         if (self.autoComplete) {
             boo = true;
         }
         if (self.active) {
             self.activateOptions(false);
             if (boo) {
+//                console.log(self.iWon())
                 if (self.iWon()) {
                     console.log('i won')
                 }
@@ -407,6 +427,9 @@ const Quiz = function (t) {
         if (self.autoComplete) {
             self.wronger();
         }
+        if (isFinalQuestion()) {
+            self.showProgress2(true);
+        }
     };
     self.nextQuestion = function () {
 //        console.log('next q, have I won ? ' + self.iWon());
@@ -420,7 +443,13 @@ const Quiz = function (t) {
     };
     self.getWinTotal = function () {
 //        return 2;
-        return $('#' + t).find('.bar').length;
+//        return $('#' + t).find('.bar').length;
+        if (t === 'player2') {
+//            console.log($('#' + t));
+//            console.log($('#race'));
+//            console.log($('#race').find('td'));
+        }
+        return $('.race').find('td').length;
     };
     self.iWon = function () {
         let won = self.score === self.getWinTotal();
@@ -471,10 +500,12 @@ const Quiz = function (t) {
                     width: 'easeOutQuart'
                 },
                 complete: function () {
+                    console.log(isFinalQuestion());
                     self.progressing = false;
                     self.updateScore(self.scorePending);
                     if (boo) {
-                        if (!self.iWon()) {
+//                        if (!self.iWon()) {
+                        if (!isFinalQuestion()) {
         //                    self.nextQuestion();
                         } else {
                             self.rival.defeat();
@@ -498,6 +529,7 @@ const Quiz = function (t) {
         }
     };
     self.victory = function () {
+        console.log('Vic Tory');
         $('#' + t).find('.option').removeClass('inactive');
         $('#' + t).find('.option').addClass('inactive');
 //        $('#' + t).find('.option').addClass('victory');
@@ -531,6 +563,7 @@ const Quiz = function (t) {
         self.showProgress2(true);
         setTimeout(self.nextQuestion, self.getDelay() * 1.3);
         setTimeout(advancePlayer, self.getDelay() * 1.1);
+//        console.log('onscore', isFinalQuestion())
 //        console.log(self.getGap())
     };
     self.getQuestionSequence = getQuestionSequence;

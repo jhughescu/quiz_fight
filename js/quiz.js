@@ -1,6 +1,12 @@
 let questionBankSet = null;
 let questionBanks = {};
 
+const Timestamp = function () {
+    let d = new Date();
+    let s = `${d.toDateString()} ${d.toTimeString()}`;
+    let self = {timestamp: s};
+    return self;
+}
 const addAllQuestionBanks = function () {
 //    console.log(questionBankSet);
     questionBankSet.forEach(q => {
@@ -159,6 +165,7 @@ const Quiz = function (t) {
     }
     let self = {
         id: t.replace('r', 'r '),
+        autoComplete: false,
         title: t,
         type: null,
         currentQuestions: null,
@@ -226,6 +233,10 @@ const Quiz = function (t) {
         });
         $('#' + t).show();
     }
+    function setAutoComplete (boo) {
+        self.autoComplete = boo;
+    }
+    self.setAutoComplete = setAutoComplete;
     self.setQuizType = setQuizType;
     self.getDelay = function () {
         return self.aDelay.min;
@@ -268,6 +279,7 @@ const Quiz = function (t) {
         $('#' + t).find('.option').removeClass('reveal');
     };
     self.askQuestion = function () {
+//        console.log('auto ' + self.autoComplete, t);
         var s, a;
         self.q = self.currentQuestions.shift();
         if (!self.q) {
@@ -296,6 +308,9 @@ const Quiz = function (t) {
             $('#' + t).find('.question').removeClass('blank');
             resizePlayer();
         }, 500);
+        if (self.autoComplete) {
+            setTimeout(self.submit, 2000);
+        }
     };
     self.showScore = function () {
 //        document.getElementById(t).querySelector('.score').innerHTML = self.id + ' score: ' + self.score;
@@ -329,28 +344,36 @@ const Quiz = function (t) {
             display: 'none'
         });
     }
+    function onOverlayComplete () {
+        if (self.autoComplete) {
+            setTimeout(self.onScore, 1000);
+        }
+    }
     self.showOverlay = function (boo) {
         let olay = $('#' + t).find('.overlay');
         let ulay = $('#' + t).find('.underlay');
         let l = null;
-        console.log(`${t} showOverlay ${$('#' + t).position()} ${$('#' + t).offset()}`);
-        console.log($('#' + t).position().left);
-        console.log($('#' + t).offset().left);
-        console.log($($('#' + t)[0]).css('transform'));
+//        console.log(`${t} showOverlay ${$('#' + t).position()} ${$('#' + t).offset()}`);
+//        console.log($('#' + t).position().left);
+//        console.log($('#' + t).offset().left);
+//        console.log($($('#' + t)[0]).css('transform'));
         if ((ulay.offset().left + ulay.width() + 20 + olay.width()) < $('body').width()) {
             l = ulay.position().left + ulay.width() + 20;
         } else {
             l = ulay.position().left - olay.width() - 30;
         }
         if (boo) {
+            let r = Math.random() > 0.45;
             olay.show();
             olay.animate({
                 left: l + 'px'
             }, {
-                duration: 1600,
+                duration: r ? 1600 : 500,
                 specialEasing: {
-                  left: "easeOutBounce"
-                }});
+                  left: r ? "easeOutBounce" : "easeOutSine"
+                },
+                complete: onOverlayComplete
+            });
         } else {
             olay.animate({
                 left: (ulay.position().left + 5) + 'px'
@@ -362,9 +385,15 @@ const Quiz = function (t) {
     };
     self.submit = function (boo) {
 //        console.log(`submit ${boo}`)
+        if (self.autoComplete) {
+            boo = true;
+        }
         if (self.active) {
             self.activateOptions(false);
             if (boo) {
+                if (self.iWon()) {
+                    console.log('i won')
+                }
                 self.showOverlay(true);
                 if (self.rival.score === 0) {
                     $('#' + t).find('.steal').addClass('inactive');
@@ -372,9 +401,11 @@ const Quiz = function (t) {
                     $('#' + t).find('.steal').removeClass('inactive');
                 }
             } else {
-//                self.askQuestion();
                 self.wronger();
             }
+        }
+        if (self.autoComplete) {
+            self.wronger();
         }
     };
     self.nextQuestion = function () {
@@ -459,7 +490,9 @@ const Quiz = function (t) {
         for (var i = 0; i < op.length; i++) {
             if ($($(op[i]).find('span')[0]).html() === self.q.answer) {
                 $(op[i]).addClass('reveal');
-                setTimeout(self.askQuestion, 3000);
+                if (!self.autoComplete) {
+                    setTimeout(self.askQuestion, 3000);
+                }
                 break;
             }
         }
@@ -560,3 +593,4 @@ const checkQuestionBankSet = function () {
 let q1 = null;
 let q2 = null;
 checkQuestionBankSet();
+let ts = new Timestamp();

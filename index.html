@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <div id='debug'></div>
     <div class='player' id='player1'>
         <div class='underlay'>
             <div class='header'></div>
@@ -135,9 +136,12 @@
 //            q1.getQuestionSequence();
 //            q2.getQuestionSequence();
 //            qk.setNewQuestionBank('footy');
+            q2.setAutoComplete(true);
             q1.askQuestion();
             q2.askQuestion();
+//            q1.setAutoComplete(true);
         };
+        document.getElementById('debug').innerHTML = '<p>Build: ' + ts.timestamp + '</p>'
 //        $('#arrow-player1').css('width', '400px');
     </script>
 </body>

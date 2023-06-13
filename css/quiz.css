@@ -293,34 +293,34 @@ body {
     border: 13px solid #BF4A0A;
     border-radius: 30px;
 }
-#pushback {
+.pushback {
 /*    border: 3px solid green;*/
-/*    cursor: pointer;*/
+    cursor: pointer;
     position: absolute;
 }
-#moveon {
+.moveon {
 /*    border: 2px solid black;*/
     left: 135px;
-/*    cursor: pointer;*/
+    cursor: pointer;
     position: absolute;
 }
 
 .overlay .buttons .over {
     cursor: pointer;
 }
-#pushback.over .button {
+.pushback.over .button {
     background-color: #8B2202;
 }
-#pushback.over #backarrowcurve {
+.pushback.over #backarrowcurve {
     border-color: #8B2202;
 }
-#pushback.over #backarrowhead {
+.pushback.over #backarrowhead {
     border-right-color: #8B2202;
 }
-#moveon.over .button, #moveon.over #frwdarrowshaft , #moveon.over #frwdarrowshafthead {
+.moveon.over .button, .moveon.over #frwdarrowshaft , .moveon.over #frwdarrowshafthead {
     background-color: #658D02;
 }
-#moveon.over #frwdarrowhead {
+.moveon.over #frwdarrowhead {
     border-left-color: #658D02;
 }
 
@@ -341,7 +341,13 @@ body {
 #player1 {
     top: 1.5%;
     left: 1.35%;
+/*    transform: rotate(180deg);*/
+}
+#player1 .underlay, #player1 .overlay {
     transform: rotate(180deg);
+}
+#player1 .overlay {
+    top: 220px;
 }
 #endzone {
     position: absolute;

@@ -6,6 +6,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/timestamp.js"></script>
     <script src="js/quiz.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,27 +17,8 @@
 
 <body>
     <div id='debug'></div>
+
     <div class='player' id='player1'>
-        <div class='underlay'>
-            <div class='header'></div>
-            <div class='question'></div>
-            <div class='option raised'></div>
-            <div class='option raised'></div>
-            <div class='option raised'></div>
-            <div class='option raised'></div>
-        </div>
-        <div class='overlay'>
-            <div class='welldone'>
-                <p>Well done -  score or steal?</p>
-            </div>
-            <div class='buttons'>
-                <div class='button score'>score</div>
-                <div class='button steal'>steal</div>
-            </div>
-            <div class='bg'></div>
-        </div>
-    </div>
-    <div class='player' id='player2'>
         <div class='underlay'>
             <div class='header'></div>
             <div class='question'></div>
@@ -50,15 +32,44 @@
                 <p>WELL DONE!</p>
             </div>
             <div class='buttons'>
-                <div id='pushback'>
+                <div class='pushback'>
                     <div class='button raised steal'>PUSH BACK</div>
                     <div id='backarrowhead'></div>
                     <div id='backarrow'>
                         <div id='backarrowcurve'></div>
                     </div>
+                </div>
+                <div class='moveon'>
+                    <div class='button raised score'>MOVE ON</div>
+                    <div id='frwdarrowshaft'></div>
+                    <div id='frwdarrowhead'></div>
 
                 </div>
-                <div id='moveon'>
+            </div>
+            <div class='bg'></div>
+        </div>
+    </div><div class='player' id='player2'>
+        <div class='underlay'>
+            <div class='header'></div>
+            <div class='question'></div>
+            <div class='option raised'></div>
+            <div class='option raised'></div>
+            <div class='option raised'></div>
+            <div class='option raised'></div>
+        </div>
+        <div class='overlay'>
+            <div class='welldone'>
+                <p>WELL DONE!</p>
+            </div>
+            <div class='buttons'>
+                <div class='pushback'>
+                    <div class='button raised steal'>PUSH BACK</div>
+                    <div id='backarrowhead'></div>
+                    <div id='backarrow'>
+                        <div id='backarrowcurve'></div>
+                    </div>
+                </div>
+                <div class='moveon'>
                     <div class='button raised score'>MOVE ON</div>
                     <div id='frwdarrowshaft'></div>
                     <div id='frwdarrowhead'></div>
@@ -136,12 +147,12 @@
 //            q1.getQuestionSequence();
 //            q2.getQuestionSequence();
 //            qk.setNewQuestionBank('footy');
-            q2.setAutoComplete(true);
+//            q2.setAutoComplete(true);
             q1.askQuestion();
             q2.askQuestion();
 //            q1.setAutoComplete(true);
         };
-        document.getElementById('debug').innerHTML = '<p>Build: ' + ts.timestamp + '</p>'
+        document.getElementById('debug').innerHTML = '<p>Build: ' + ts.timestamp.datetime + '</p>'
 //        $('#arrow-player1').css('width', '400px');
     </script>
 </body>

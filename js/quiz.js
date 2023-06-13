@@ -2,9 +2,9 @@ let questionBankSet = null;
 let questionBanks = {};
 
 const Timestamp = function () {
-    let d = new Date();
-    let s = `${d.toDateString()} ${d.toTimeString()}`;
-    let self = {timestamp: s};
+//    let d = new Date();
+//    let s = `${d.toDateString()} ${d.toTimeString()}`;
+    let self = {timestamp: timestamp};
     return self;
 }
 const addAllQuestionBanks = function () {
@@ -22,8 +22,8 @@ const Button = function (id) {
         id: id,
         el: null
     };
-    if ($('#' + id).length > 0) {
-        self.el = $($('#' + id)[0]);
+    if ($('.' + id).length > 0) {
+        self.el = $($('.' + id)[0]);
         self.el.on('mouseover', function () {
             self.el.addClass('over');
         });
@@ -31,6 +31,7 @@ const Button = function (id) {
             self.el.removeClass('over');
         });
     }
+    console.log(self)
     return self;
 };
 const QuestionBank = function (type) {
@@ -242,6 +243,7 @@ const Quiz = function (t) {
         self.autoComplete = boo;
     }
     function isFinalQuestion () {
+//        console.log(self.getWinTotal(), self.score);
         return self.getWinTotal() - self.score === 1;
     }
     self.setAutoComplete = setAutoComplete;
@@ -288,7 +290,7 @@ const Quiz = function (t) {
     };
     self.askQuestion = function () {
 //        console.log('auto ' + self.autoComplete, t);
-        var s, a;
+        var s, a, i;
         self.q = self.currentQuestions.shift();
         if (self.iWon()) {
             console.log('i won, so stop here')
@@ -299,9 +301,10 @@ const Quiz = function (t) {
             self.askQuestion();
         } else {
             s = '<span>' + self.q.question + '</span>';
-            self.q.options.reverse();
-            self.q.options.sort(rSort);
-            self.q.options.sort(rSort);
+            for (i = 0; i < 100; i++) {
+                self.q.options.reverse();
+                self.q.options.sort(rSort);
+            }
             self.q.options.forEach((o, id) => {
                 self.optionsDiv[id].innerHTML = '<span>' + o + '</span>';
             });
@@ -358,14 +361,19 @@ const Quiz = function (t) {
     }
     function onOverlayComplete () {
         if (self.autoComplete) {
-            setTimeout(self.onScore, 1000);
+//            console.log(`self.iWon() ${self.iWon()}`);
+//            console.log(`isFinalQuestion() ${isFinalQuestion()}`);
+            if (!isFinalQuestion()) {
+//                console.log('this is not the final question, run the timeout');
+//                setTimeout(self.onScore, 1000);
+            }
         }
     }
     self.showOverlay = function (boo) {
         if (boo) {
 //            console.log('showOverlay: ' + isFinalQuestion());
             if(isFinalQuestion()) {
-                return;
+//                return;
             }
         }
         let olay = $('#' + t).find('.overlay');
@@ -376,7 +384,7 @@ const Quiz = function (t) {
 //        console.log($('#' + t).offset().left);
 //        console.log($($('#' + t)[0]).css('transform'));
         if ((ulay.offset().left + ulay.width() + 20 + olay.width()) < $('body').width()) {
-            l = ulay.position().left + ulay.width() + 20;
+            l = ulay.position().left + ulay.width() + 30;
         } else {
             l = ulay.position().left - olay.width() - 30;
         }
@@ -428,7 +436,7 @@ const Quiz = function (t) {
             self.wronger();
         }
         if (isFinalQuestion()) {
-            self.showProgress2(true);
+//            self.showProgress2(true);
         }
     };
     self.nextQuestion = function () {
@@ -485,6 +493,7 @@ const Quiz = function (t) {
         });
     };
     self.showProgress2 = function (boo) {
+//        console.log('showProgress2');
         var w = $($('.race').find('td')[0]).width() + $($('.race').find('td')[self.score]).position().left;
         if (!boo) {
             self.progressBar = $($('#' + t).find('.bar')[self.score - (boo ? 0 : (self.progressing ? 0 : 1))]);
@@ -500,12 +509,17 @@ const Quiz = function (t) {
                     width: 'easeOutQuart'
                 },
                 complete: function () {
-                    console.log(isFinalQuestion());
+//                    console.log(isFinalQuestion());
                     self.progressing = false;
                     self.updateScore(self.scorePending);
                     if (boo) {
-//                        if (!self.iWon()) {
-                        if (!isFinalQuestion()) {
+//                        console.log(`self.iWon() ${self.iWon()}`);
+//                        console.log(`isFinalQuestion() ${isFinalQuestion()}`);
+                        if (isFinalQuestion()) {
+//                            self.onScore();
+                        }
+                        if (!self.iWon()) {
+//                        if (!isFinalQuestion()) {
         //                    self.nextQuestion();
                         } else {
                             self.rival.defeat();
@@ -557,9 +571,11 @@ const Quiz = function (t) {
         $('#' + t).find('.option').addClass('dunne');
     };
     self.onScore = function () {
+//        console.log('onScore');
         self.updateScorePending(self.scorePending + 1);
         self.showOverlay(false);
 //        self.showProgress(true);
+//        debugger;
         self.showProgress2(true);
         setTimeout(self.nextQuestion, self.getDelay() * 1.3);
         setTimeout(advancePlayer, self.getDelay() * 1.1);
@@ -627,3 +643,4 @@ let q1 = null;
 let q2 = null;
 checkQuestionBankSet();
 let ts = new Timestamp();
+//console.log(ts);

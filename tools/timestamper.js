@@ -30,4 +30,5 @@ const jsonData = JSON.stringify(data);
         }
     });
 }
-let i = setInterval(writer, 1000);
+writer();
+let i = setInterval(writer, 10000);

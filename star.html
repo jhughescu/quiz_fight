@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .star {
+      position: relative;
+      width: 0;
+      height: 0;
+      border-right: 30px solid transparent;
+      border-bottom: 50px solid #feca57;
+      border-left: 30px solid transparent;
+      transform: rotate(45deg);
+    }
+
+    .star:before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -30px;
+      width: 0;
+      height: 0;
+      border-right: 30px solid transparent;
+      border-bottom: 50px solid #feca57;
+      border-left: 30px solid transparent;
+      transform: rotate(-45deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="star"></div>
+</body>
+</html>

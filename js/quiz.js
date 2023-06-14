@@ -173,7 +173,7 @@ const Quiz = function (t) {
         questionBanks: {},
         q: null,
         qID: null,
-        aDelay: {min: 500, max: 5000},
+        aDelay: {min: 400, max: 5000},
         score: 0,
         scorePending: null,
         rival: null,
@@ -208,7 +208,8 @@ const Quiz = function (t) {
             left: x + 'px'
         }, 300, function () {
             $('#'+ t).find('.underlay').find('.header').css({
-                'background-color': $($('.buttons').find('.topic_button')[s]).css('background-color')
+                'background-color': $($('.buttons').find('.topic_button')[s]).css('background-color'),
+                'background-color': 'white',
             });
 
         });
@@ -370,19 +371,9 @@ const Quiz = function (t) {
         }
     }
     self.showOverlay = function (boo) {
-        if (boo) {
-//            console.log('showOverlay: ' + isFinalQuestion());
-            if(isFinalQuestion()) {
-//                return;
-            }
-        }
         let olay = $('#' + t).find('.overlay');
         let ulay = $('#' + t).find('.underlay');
         let l = null;
-//        console.log(`${t} showOverlay ${$('#' + t).position()} ${$('#' + t).offset()}`);
-//        console.log($('#' + t).position().left);
-//        console.log($('#' + t).offset().left);
-//        console.log($($('#' + t)[0]).css('transform'));
         if ((ulay.offset().left + ulay.width() + 20 + olay.width()) < $('body').width()) {
             l = ulay.position().left + ulay.width() + 30;
         } else {
@@ -406,7 +397,6 @@ const Quiz = function (t) {
             }, 300, function () {
                 resetOverlay();
             });
-//            resetOverlay();
         }
     };
     self.submit = function (boo) {
@@ -493,34 +483,36 @@ const Quiz = function (t) {
         });
     };
     self.showProgress2 = function (boo) {
-//        console.log('showProgress2');
-        var w = $($('.race').find('td')[0]).width() + $($('.race').find('td')[self.score]).position().left;
+        var w = ($($('.race').find('td')[0]).width() / 2) + $($('.race').find('td')[self.score]).position().left + 40;
         if (!boo) {
             self.progressBar = $($('#' + t).find('.bar')[self.score - (boo ? 0 : (self.progressing ? 0 : 1))]);
         }
         self.progressBar.stop();
         self.progressing = true;
+        $('#arrow-' + t).css({
+            left: '0px'
+        });
         $('#arrow-' + t).animate(
             {
-                width: w + 'px'
+                width: (w + 20) + 'px'
             }, {
                 duration: self.getDelay(),
                 specialEasing: {
-                    width: 'easeOutQuart'
+                    width: 'easeInQuart'
                 },
                 complete: function () {
-//                    console.log(isFinalQuestion());
                     self.progressing = false;
                     self.updateScore(self.scorePending);
+                    $('#arrow-' + t).find('img').addClass('big');
+                    setTimeout(function () {
+                        $('#arrow-' + t).css({width: w + 'px'});
+                    }, 50);
+                    setTimeout(function () {
+                        $('#arrow-' + t).find('img').removeClass('big');
+                    }, 100);
                     if (boo) {
-//                        console.log(`self.iWon() ${self.iWon()}`);
-//                        console.log(`isFinalQuestion() ${isFinalQuestion()}`);
-                        if (isFinalQuestion()) {
-//                            self.onScore();
-                        }
                         if (!self.iWon()) {
-//                        if (!isFinalQuestion()) {
-        //                    self.nextQuestion();
+                            //
                         } else {
                             self.rival.defeat();
                             self.victory();

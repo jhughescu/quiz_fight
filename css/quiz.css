@@ -183,6 +183,7 @@ body {
     width: 100%;
     height: 30px;
     background-color: #D1356F;
+    background-color: white;
 }
 .overlay {
     display: none;
@@ -369,6 +370,7 @@ body {
     left: 1.35%;
     width: 97.3%;
     z-index: 4;
+    overflow: hidden;
 /*    background-color: rgba(255, 0, 0, 0.42);*/
 }
 #playzone table {
@@ -426,14 +428,48 @@ body {
 #arrow-player1 {
     top: 110px;
     width: 0px;
-/*    left: -500px;*/
+    left: -40px;
 }
 #arrow-player2 {
     top: 200px;
     width: 0px;
+    left: -40px;
+}
+.arrow:after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    right: 0px;
+    top: 0px;
+    background-repeat: no-repeat;
+/*    background-color: red;*/
+}
+.arrow img {
+    position: absolute;
+    right: 0px;
+}
+.arrow img.big {
+    width: 100px;
+    height: 100px;
+    top: -10px;
+    right: -10px;
+}
+#arrow-player2 {
+/*    background-image: url(../assets/star_blue.png);*/
+    background-repeat: no-repeat;
+    background-position: right;
+    z-index: 10000000000;
+}
+#arrow-player2:after {
+/*    background-image: url(../assets/star_blue.png);*/
+}
+#arrow-player1:after {
+/*    background-image: url(../assets/star_pink.png);*/
 }
 #arrow-player1 .arrow-top {
     background-color: #FE7195;
+/*    width: 10%;*/
 }
 #arrow-player1 .arrow-top:after {
     border-left-color: #FE7195;
@@ -459,14 +495,15 @@ body {
 .arrow {
     position: absolute;
     z-index: -1;
-    height: 60px;
+    height: 80px;
+/*    background-color: grey;*/
 }
 .arrow-top {
     position: absolute;
     z-index: -1;
     height: 50%;
-    width: calc(100% - 30px);
-    top: 0px;
+    width: calc(100% - 70px);
+    top: 10px;
 /*    background-color: #FE7195;*/
 }
 .arrow-top:after {
@@ -481,8 +518,8 @@ body {
     position: absolute;
     z-index: -1;
     height: 30px;
-    width: calc(100% - 30px);
-    top: 30px;
+    width: calc(100% - 70px);
+    top: 40px;
 /*    background-color: #EB4972;*/
 }
 .arrow-bottom:after {

@@ -102,19 +102,21 @@
         </div>
     <script>
             const beaster = function (id, t) {
-                console.log(t);
-                console.log($(`#${id}`));
-                $(`#${id}`).html(t);
+//                console.log(t);
+//                console.log($(`.${id}`));
+                $(`.${id}`).html(t);
             }
             const Template = function (id) {
-                console.log(`template: ${id}`);
+//                console.log(`template: ${id}`);
                 fetch(`assets/${id}.txt`)
                     .then((response) => response.text())
                     .then((text) => beaster(id, text));
             };
-            let tmf = new Template('moveonfront');
-            let tmb = new Template('moveonback');
-            let tms = new Template('moveonshadow');
+            let startup = function () {
+                let tmf = new Template('moveonfront');
+                let tmb = new Template('moveonback');
+                let tms = new Template('moveonshadow')
+            }
             $('.moveon').hover(function () {
                 $(this).addClass('oover');
                 $(this).find('.front').removeClass('raised');
@@ -124,6 +126,7 @@
                 $(this).find('.front').addClass('raised');
                 $(this).find('.front').removeClass('lowered');
             });
+            setTimeout(startup, 10);
         </script>
     </body>
 </html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Quiz Fight</title>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+      <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="js/timestamp.js"></script>
+        <script src="js/quiz.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+<!--
+        <link rel='stylesheet' href='css/quiz.css'>
+        <link rel='stylesheet' href='css/oldquiz.css'>
+-->
+        <style>
+            .arrow {
+                position: absolute;
+            }
+            .imgbutton .text {
+                position: absolute;
+                z-index: 4;
+                top: 40%;
+                width: 74%;
+                text-align: center;
+/*                background-color: blueviolet;*/
+/*                display: none;*/
+            }
+            .moveon {
+                position: absolute;
+                top: 100px;
+                left: 100px;
+                width: 148px;
+                height: 92px;
+/*                background-color: black;*/
+                cursor: pointer;
+            }
+            .moveonfront {
+                top: 4px;
+                z-index: 3;
+                cursor: pointer;
+/*                display: none;*/
+            }
+            .moveonback {
+                top: 4px;
+                z-index: 2;
+            }
+            .moveonshadow {
+                top: 4px;
+                z-index: 1;
+            }
+            .oover #svg-moveon {
+                fill: #658D02;
+/*                fill: #ace816;*/
+            }
+            .lowered:after {
+                content: '';
+                position: absolute;
+                bottom: 9%;
+                left: 4%;
+                width: 96%;
+                height: 30%;
+                border-radius: 30px;
+                border-top-left-radius: 0px;
+                border-top-right-radius: 0px;
+                background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6));
+            }
+            .moveonfront.lowered:after {
+                width: 65.5%;
+            }
+            .raised:after {
+                content: '';
+                position: absolute;
+                top: 4%;
+                left: 4%;
+                width: 96%;
+                height: 30%;
+                border-radius: 30px;
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 0px;
+                background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+            }
+            .moveonfront.raised:after {
+                width: 65.5%;
+            }
+        </style>
+
+    </head>
+
+    <body style='background-color: #2b7f93'>
+        <div class='imgbutton moveon'>
+            <div class='text'>MOVE ON</div>
+            <div class='arrow raised front moveonfront'></div>
+            <div class='arrow moveonback'></div>
+            <div class='arrow moveonshadow'></div>
+        </div>
+    <script>
+            const beaster = function (id, t) {
+                $(`#${id}`).html(t);
+            }
+            const Template = function (id) {
+                fetch(`assets/${id}.txt`)
+                    .then((response) => response.text())
+                    .then((text) => beaster(id, text));
+            };
+            let tmf = new Template('moveonfront');
+            let tmb = new Template('moveonback');
+            let tms = new Template('moveonshadow');
+            $('.moveon').hover(function () {
+                $(this).addClass('oover');
+                $(this).find('.front').removeClass('raised');
+                $(this).find('.front').addClass('lowered');
+            }, function () {
+                $(this).removeClass('oover');
+                $(this).find('.front').addClass('raised');
+                $(this).find('.front').removeClass('lowered');
+            });
+        </script>
+    </body>
+</html>

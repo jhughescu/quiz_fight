@@ -1,5 +1,6 @@
 let questionBankSet = null;
 let questionBanks = {};
+let quizzes = {};
 
 const Timestamp = function () {
 //    let d = new Date();
@@ -183,8 +184,19 @@ const Quiz = function (t) {
         optionsDiv: document.getElementById(t).querySelectorAll('.option'),
         progressBar: null,
         progressing: null,
-        active: false
+        active: false,
+        buttonScore: $('#' + t).find('.score'),
+        buttonSteal: $('#' + t).find('.steal')
     };
+    function reset () {
+        self.score = 0;
+        self.scorePending = 0;
+        advancePlayer();
+        self.resetProgress();
+        self.getQuestionSequence();
+        self.askQuestion();
+        self.showOverlay(false);
+    }
     function getQuestionSequence () {
         var s = [];
         questionBankSet.forEach(b => {
@@ -196,14 +208,48 @@ const Quiz = function (t) {
 //        console.log(s);
         return s;
     }
+    function drawHeaderArrow (boo) {
+
+        let ha = $('#' + t).find('.headerarrow');
+        let s = self.score;
+        let td = $($('.buttons').find('.topic_button')[s]);
+        let ac = td.css('background-color');
+        let p = $('#' + t);
+        if (boo) {
+            let d = self.score > 0 ? td.offset() : td.position();
+//            let adj = self.score > 0 ? 0 : $($('#river').find('table')[0]).position().left;
+            let adj = self.score > 0 ? 0 : $('#playzone').position().left;
+//            console.log(adj);
+//            adj = 30;
+            d = td.offset();
+            ha.css({
+                display: boo ? 'inline-block' : 'none',
+                'border-top-color': (boo ? ac : 'white'),
+                'border-left-width': td.width() / 2,
+                'border-right-width': td.width() / 2,
+                left: (d.left - p.position().left - adj) + 'px'
+            });
+            ha.animate({'border-top-width': '30px'}, 200);
+        } else {
+            ha.animate({'border-top-width': '0px'}, 200);
+        }
+    }
+
     function advancePlayer () {
-//        console.log('advancePlayer' + self.iWon());
         if (self.iWon()) {
             console.log('no more');
             return;
         }
         let s = self.score;
-        let x = $($('.race').find('td')[s]).offset().left;
+        let td = $($('.race').find('td')[s]);
+        let x = td.offset().left - (td.width() / 2);
+        if (self.score === 0) {
+            x = td.offset().left;
+        }
+        if (isFinalQuestion()) {
+            x = $($('.race').find('td')[self.score - 1]).offset().left;
+
+        }
         $('#'+ t).animate({
             left: x + 'px'
         }, 300, function () {
@@ -211,9 +257,9 @@ const Quiz = function (t) {
                 'background-color': $($('.buttons').find('.topic_button')[s]).css('background-color'),
                 'background-color': 'white',
             });
-
+            drawHeaderArrow(true);
         });
-        if (s > 2) {
+        if (s > 25) {
             resetOverlay();
             $('#'+ t).find('.underlay').delay(0).animate({
                 'left' : ($($('.race').find('td')[s]).width() * -1) + 'px'
@@ -249,6 +295,7 @@ const Quiz = function (t) {
     }
     self.setAutoComplete = setAutoComplete;
     self.setQuizType = setQuizType;
+    self.reset = reset;
     self.getDelay = function () {
         return self.aDelay.min;
     };
@@ -329,8 +376,6 @@ const Quiz = function (t) {
         }
     };
     self.showScore = function () {
-//        document.getElementById(t).querySelector('.score').innerHTML = self.id + ' score: ' + self.score;
-//        self.progressBar = $($('#' + t).find('.bar')[self.score - 1]);
         self.progressBar = $($('#' + t).find('.bar')[self.score]);
     };
     self.updateScorePending = function (s) {
@@ -371,6 +416,16 @@ const Quiz = function (t) {
         }
     }
     self.showOverlay = function (boo) {
+        let olay = $('#' + t).find('.overlay');
+        let ulay = $('#' + t).find('.underlay');
+        if (boo) {
+            olay.show();
+            onOverlayComplete();
+        } else {
+            olay.hide();
+        }
+    }
+    self.showOverlayv1 = function (boo) {
         let olay = $('#' + t).find('.overlay');
         let ulay = $('#' + t).find('.underlay');
         let l = null;
@@ -455,6 +510,12 @@ const Quiz = function (t) {
         return won;
     };
 
+    self.resetProgress = function () {
+        $('#arrow-' + t).css({
+            left: '-40px',
+            width: '0px'
+        });
+    };
     self.showProgress = function (boo) {
         if (!boo) {
             self.progressBar = $($('#' + t).find('.bar')[self.score - (boo ? 0 : (self.progressing ? 0 : 1))]);
@@ -563,7 +624,7 @@ const Quiz = function (t) {
         $('#' + t).find('.option').addClass('dunne');
     };
     self.onScore = function () {
-//        console.log('onScore');
+        console.log('onScore');
         self.updateScorePending(self.scorePending + 1);
         self.showOverlay(false);
 //        self.showProgress(true);
@@ -571,6 +632,7 @@ const Quiz = function (t) {
         self.showProgress2(true);
         setTimeout(self.nextQuestion, self.getDelay() * 1.3);
         setTimeout(advancePlayer, self.getDelay() * 1.1);
+        drawHeaderArrow(false);
 //        console.log('onscore', isFinalQuestion())
 //        console.log(self.getGap())
     };
@@ -583,10 +645,10 @@ const Quiz = function (t) {
             $(this).addClass('reveal')
         }
     });
-    $('#' + t).find('.score').on('click', function () {
+    self.buttonScore.on('click', function () {
         self.onScore();
     });
-    $('#' + t).find('.steal').on('click', function () {
+    self.buttonSteal.on('click', function () {
         self.rival.updateScorePending(self.rival.scorePending - 1);
         self.rival.showProgress(false);
         self.showOverlay(false);
@@ -600,9 +662,11 @@ const Quiz = function (t) {
     new Button('pushback');
 //    console.log($('.topic_button').width());
     self.showScore();
+    drawHeaderArrow(true);
     // defaults:
     setQuizType(1);
 //    getQuestionSequence();
+    quizzes[t] = self;
     return self;
 };
 const checkQuestions = function () {
@@ -635,4 +699,12 @@ let q1 = null;
 let q2 = null;
 checkQuestionBankSet();
 let ts = new Timestamp();
+//let t = new Template2();
 //console.log(ts);
+const reset = function () {
+    for (var i in quizzes) {
+        quizzes[i].reset();
+    }
+}
+window.reset = reset;
+reset();

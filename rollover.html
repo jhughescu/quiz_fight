@@ -102,9 +102,11 @@
         </div>
     <script>
             const beaster = function (id, t) {
+                console.log(t)
                 $(`#${id}`).html(t);
             }
             const Template = function (id) {
+                console.log(`template: ${id}`);
                 fetch(`assets/${id}.txt`)
                     .then((response) => response.text())
                     .then((text) => beaster(id, text));

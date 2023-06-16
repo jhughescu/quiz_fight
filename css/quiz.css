@@ -194,6 +194,8 @@ body {
     border-right: 105px solid transparent;
     border-top: 30px solid black;
 }
+
+/* overlay - the move on and push back buttons */
 .overlay {
 /*    display: none;*/
 /*    z-index: -10;*/
@@ -237,165 +239,89 @@ body {
     z-index: 11;
     position: absolute;
     width: calc(100%);
-    width: 580px;
+    width: 590px;
     min-height: 100%;
-/*    height: inherit;*/
-    top: 140px;
-/*    top: 0px;*/
+    top: 130px;
     left: 0px;
-/*    background-color: cadetblue;*/
     pointer-events: none;
     display: table-row;
+/*    background-color: rgba(232, 19, 126, 0.56);*/
 }
-.overlay .buttons .button {
-/*    display: table-cell;*/
-/*    display: none;*/
-    position: absolute;
-    position: relative;
-    float: left;
-    width: 110px;
-    height: 76px;
-/*    margin: 8px;*/
-    border-radius: 25px;
-/*    background-color: red;*/
-    line-height: 4.8;
-    left: 10px;
-    box-shadow: 0px 8px rgba(0, 0, 0, 0.26);
-/*    cursor: pointer;*/
-}
-.overlay .buttons .button.score {
-    background-color: #83B507;
-/*    left: 135px*/
-}
-.overlay .buttons .button.steal {
-    background-color: #BF4A0A;
-}
-.steal {
-/*    background-color: #BF4A0A;*/
-}
-#backarrow {
-    position: absolute;
-    top: -30px;
-    left: 30px;
-    width: 40px;
-    height: 30px;
-    overflow: hidden;
-}
-#backarrowhead {
-    content: '';
-    position: absolute;
-    left: 10px;
-    top: -38px;
-    width: 0px;
-    height: 0px;
-    border-right: 20px solid #BF4A0A;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-}
-#frwdarrowshaft {
-    position: relative;
-    background-color: #83B507;
-/*    background-color: blue;*/
-    height: 13px;
-    top: 32px;
-/*    left: 253px;*/
-    left: 118px;
-    width: 12px;
-}
-#frwdarrowhead {
-    content: '';
-    position: absolute;
-    left: 130px;
-    top: 19px;
-    width: 0px;
-    height: 0px;
-    border-left: 30px solid #83B507;
-    border-top: 20px solid transparent;
-    border-bottom: 20px solid transparent;
-}
-#backarrowcurve {
-    position: absolute;
-    right: 0px;
-    width: 100px;
-    height: 100px;
-    border: 13px solid #BF4A0A;
-    border-radius: 30px;
-}
-.pushbackv1 {
-/*    border: 3px solid green;*/
+
+/* imported from rollover.html */
+.imgbutton {
+    pointer-events: all;
     cursor: pointer;
-    position: absolute;
-    display: none;
 }
-.pushback{
+.svgTarg {
     position: absolute;
-    width: 105px;
-    height: 118px;
-    left: 0px;
-    background-image: url(../assets/pushback.svg);
-/*    border: 3px solid blue;*/
 }
-.pushback:hover {
-    background-image: url(../assets/pushback-over.svg);
+.imgbutton .text {
+    position: absolute;
+    z-index: 4;
+    top: 40%;
+    width: 74%;
+    text-align: center;
+/*                background-color: blueviolet;*/
+/*                display: none;*/
 }
 .moveon {
     position: absolute;
-    width: 148px;
-    height: 80px;
+    top: 100px;
+    top: 0px;
+/*
+    left: 100px;
+    left: 0px;
+*/
     right: 0px;
-    background-image: url(../assets/moveon.png);
-    background-repeat: no-repeat;
-}
-.moveon:hover {
-    background-image: url(../assets/moveon-over.png);
-    background-position: 0px -5px;
-}
-.buttons .imgbutton {
-    pointer-events: auto;
-    position: absolute;
-    bottom: 0px;
-/*    background-color: blue;*/
-}
-.buttons .imgbutton span {
-/*    display: none;*/
-    position: absolute;
-    left: 9px;
-    bottom: 31px;
-    width: 100%;
-    text-align: left;
-/*    background-color: aquamarine;*/
-}
-.buttons .imgbutton.moveon span {
-    left: 15px;
-}
+    width: 148px;
+    height: 92px;
+/*    background-color: black;*/
 
-.moveonv1 {
-/*    border: 2px solid black;*/
-    left: 135px;
-    cursor: pointer;
-    position: absolute;
-/*    outline: 4px solid blue;*/
+}
+.overlay .imgbutton {
     display: none;
 }
+.moveonfront {
+    top: 4px;
+    z-index: 3;
+/*    cursor: pointer;*/
+/*                display: none;*/
+}
+.moveonback {
+    top: 4px;
+    z-index: 2;
+}
+.moveonshadow {
+    top: 4px;
+    z-index: 1;
+}
+.oover #svg-moveon {
+    fill: #83B507;
+}
+.oover .shadow {
+    top: -1px;
+}
+.overlay .raised:after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 4%;
+    width: 96%;
+    height: 30%;
+    border-radius: 30px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+/*    display: none;*/
+}
+.moveonfront.raised:after {
+    width: 65.5%;
+}
 
-.overlay .buttons .over {
-    cursor: pointer;
-}
-.pushbackv1.over .button {
-    background-color: #8B2202;
-}
-.pushbackv1.over #backarrowcurve {
-    border-color: #8B2202;
-}
-.pushbackv1.over #backarrowhead {
-    border-right-color: #8B2202;
-}
-.moveonv1.over .button, .moveonv1.over #frwdarrowshaft , .moveonv1.over #frwdarrowshafthead {
-    background-color: #658D02;
-}
-.moveonv1.over #frwdarrowhead {
-    border-left-color: #658D02;
-}
+/* end import */
+
+
 
 #player2 {
     top: 70%;

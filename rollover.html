@@ -7,7 +7,7 @@
 
       <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="js/timestamp.js"></script>
-        <script src="js/quiz.js"></script>
+<!--        <script src="js/quiz.js"></script>-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
                 color: white;
                 font-family: 'Roboto', serif;
             }
-            .arrow {
+            .svgTarg {
                 position: absolute;
             }
             .imgbutton .text {
@@ -56,27 +56,10 @@
                 z-index: 1;
             }
             .oover #svg-moveon {
-                fill: #658D02;
-/*                fill: #ace816;*/
+                fill: #83B507;
             }
             .oover .shadow {
-/*                display: none;*/
-                top: -7px;
-            }
-            .lowered:after {
-                content: '';
-                position: absolute;
-                bottom: 9%;
-                left: 4%;
-                width: 96%;
-                height: 30%;
-                border-radius: 30px;
-                border-top-left-radius: 0px;
-                border-top-right-radius: 0px;
-                background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6));
-            }
-            .moveonfront.lowered:after {
-                width: 65.5%;
+                top: -1px;
             }
             .raised:after {
                 content: '';
@@ -100,37 +83,38 @@
     <body style='background-color: #2b7f93'>
         <div class='imgbutton moveon'>
             <div class='text'>MOVE ON</div>
-            <div class='arrow raised front moveonfront'></div>
-            <div class='arrow moveonback'></div>
-            <div class='arrow moveonshadow shadow'></div>
+            <div class='svgTarg raised front moveonfront'></div>
+            <div class='svgTarg moveonback'></div>
+            <div class='svgTarg moveonshadow shadow'></div>
         </div>
     <script>
-            const beaster = function (id, t) {
-//                console.log(t);
-//                console.log($(`.${id}`));
-                $(`.${id}`).html(t);
-            }
-            const Template = function (id) {
-//                console.log(`template: ${id}`);
-                fetch(`assets/${id}.txt`)
-                    .then((response) => response.text())
-                    .then((text) => beaster(id, text));
+
+            const ImportSVG = function (id) {
+                function renderSVG (id, t) {
+                    $(`.${id}`).html(t);
+                }
+                function loadData (id) {
+                    fetch(`assets/${id}.txt`)
+                        .then((response) => response.text())
+                        .then((text) => renderSVG(id, text));
+                }
+                loadData(id);
             };
-            let startup = function () {
-                let tmf = new Template('moveonfront');
-                let tmb = new Template('moveonback');
-                let tms = new Template('moveonshadow')
-            }
+            let importSVGs = function () {
+                let tmf = new ImportSVG('moveonfront');
+                let tmb = new ImportSVG('moveonback');
+                let tms = new ImportSVG('moveonshadow')
+            };
             $('.moveon').hover(function () {
                 $(this).addClass('oover');
-                $(this).find('.front').removeClass('raised');
-                $(this).find('.front').addClass('lowered');
+//                $(this).find('.front').removeClass('raised');
+//                $(this).find('.front').addClass('lowered');
             }, function () {
                 $(this).removeClass('oover');
-                $(this).find('.front').addClass('raised');
-                $(this).find('.front').removeClass('lowered');
+//                $(this).find('.front').addClass('raised');
+//                $(this).find('.front').removeClass('lowered');
             });
-            setTimeout(startup, 10);
+            importSVGs();
         </script>
     </body>
 </html>

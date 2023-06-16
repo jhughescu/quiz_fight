@@ -159,6 +159,17 @@ const getQuestionSet = function (id) {
 
     return s;
 };
+const ImportSVG = function (id) {
+    function renderSVG (id, t) {
+        $(`.${id}`).html(t);
+    }
+    function loadData (id) {
+        fetch(`assets/${id}.txt`)
+            .then((response) => response.text())
+            .then((text) => renderSVG(id, text));
+    }
+    loadData(id);
+};
 const Quiz = function (t) {
     let q = null;
     let typeMap = {
@@ -185,7 +196,7 @@ const Quiz = function (t) {
         progressBar: null,
         progressing: null,
         active: false,
-        buttonScore: $('#' + t).find('.score'),
+        buttonScore: $('#' + t).find('.moveon'),
         buttonSteal: $('#' + t).find('.steal')
     };
     function reset () {
@@ -234,7 +245,6 @@ const Quiz = function (t) {
             ha.animate({'border-top-width': '0px'}, 200);
         }
     }
-
     function advancePlayer () {
         if (self.iWon()) {
             console.log('no more');
@@ -293,6 +303,17 @@ const Quiz = function (t) {
 //        console.log(self.getWinTotal(), self.score);
         return self.getWinTotal() - self.score === 1;
     }
+    function pushbackAvailable () {
+        return false;
+    }
+    function moveonAvailable () {
+        return true;
+    }
+    function importSVGs () {
+        let tmf = new ImportSVG('moveonfront');
+        let tmb = new ImportSVG('moveonback');
+        let tms = new ImportSVG('moveonshadow')
+    };
     self.setAutoComplete = setAutoComplete;
     self.setQuizType = setQuizType;
     self.reset = reset;
@@ -420,6 +441,19 @@ const Quiz = function (t) {
         let ulay = $('#' + t).find('.underlay');
         if (boo) {
             olay.show();
+            if (moveonAvailable()) {
+                self.buttonScore.show();
+//                self.buttonScore.hide().fadeIn();
+                self.buttonScore.animate({right: '-30px'}, 50).animate({right: '0px'}, 500);
+            } else {
+                self.buttonScore.hide();
+            }
+            if (pushbackAvailable()) {
+                self.buttonSteal.show();
+                self.buttonSteal.animate({right: '-30px'}, 50).animate({right: '0px'}, 500);
+            } else {
+                self.buttonSteal.hide();
+            }
             onOverlayComplete();
         } else {
             olay.hide();
@@ -654,6 +688,15 @@ const Quiz = function (t) {
         self.showOverlay(false);
         setTimeout(self.nextQuestion, self.getDelay() * 1.3);
     });
+    $('.imgbutton').hover(function () {
+        $(this).addClass('oover');
+//                $(this).find('.front').removeClass('raised');
+//                $(this).find('.front').addClass('lowered');
+    }, function () {
+        $(this).removeClass('oover');
+//                $(this).find('.front').addClass('raised');
+//                $(this).find('.front').removeClass('lowered');
+    });
 //    resizePlayer();
     document.getElementsByTagName('body')[0].onresize = function () {
         resizePlayer();
@@ -665,6 +708,7 @@ const Quiz = function (t) {
     drawHeaderArrow(true);
     // defaults:
     setQuizType(1);
+    importSVGs();
 //    getQuestionSequence();
     quizzes[t] = self;
     return self;

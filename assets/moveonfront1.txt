@@ -1,8 +1,8 @@
 
-<svg id-'svg-moveonfront' fill="#83B507" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none" x="0px" y="0px" width="148px" height="90px" viewBox="0 0 148 90">
+<svg id='svg-moveon' fill="#658D02" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none" x="0px" y="0px" width="148px" height="84px" viewBox="0 0 148 84">
 <defs>
-<g id="moveonfrontfill">
-<path stroke="none" d="
+<g id="Layer0_0_FILL">
+<path  stroke="none" d="
 M 116.05 190.5
 L 65.95 190.5
 Q 54.55 190.5 46.55 199.05 44.5 201.15 43.05 203.5 38.8 210.15 38.5 218.5
@@ -20,6 +20,6 @@ Q 143.5 207.55 135.45 199.05 127.45 190.5 116.05 190.5 Z"/>
 </defs>
 
 <g transform="matrix( 1, 0, 0, 1, -36.5,-188.5) ">
-<use xlink:href="#moveonfrontfill"/>
+<use xlink:href="#Layer0_0_FILL"/>
 </g>
 </svg>

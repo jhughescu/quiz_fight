@@ -32,7 +32,7 @@ const Button = function (id) {
             self.el.removeClass('over');
         });
     }
-    console.log(self)
+//    console.log(self)
     return self;
 };
 const QuestionBank = function (type) {
@@ -179,6 +179,7 @@ const Quiz = function (t) {
     let self = {
         id: t.replace('r', 'r '),
         autoComplete: false,
+        autoInt: null,
         title: t,
         type: null,
         currentQuestions: null,
@@ -197,8 +198,27 @@ const Quiz = function (t) {
         progressing: null,
         active: false,
         buttonScore: $('#' + t).find('.moveon'),
-        buttonSteal: $('#' + t).find('.steal')
+        buttonSteal: $('#' + t).find('.pushback')
     };
+    let delays = {
+        overlay: 1200,
+        autoAnswer: {min: 1500, max: 4000}
+    };
+    function getDelay (d) {
+        var dr = 2000, ds, r;
+        if (delays.hasOwnProperty(d)) {
+            if (typeof(delays[d]) === 'number') {
+                dr = delays[d];
+            } else {
+                ds = delays[d];
+                r = Math.random();
+                dr = ds.min + Math.round(r * (ds.max - ds.min));
+            }
+        } else {
+            console.log('no delay set with name ' + d + ', returning default (2000)');
+        }
+        return dr;
+    }
     function reset () {
         self.score = 0;
         self.scorePending = 0;
@@ -207,6 +227,9 @@ const Quiz = function (t) {
         self.getQuestionSequence();
         self.askQuestion();
         self.showOverlay(false);
+        $('#losebanner').removeClass(t);
+        $('#winbanner').removeClass(t);
+        $('div').removeClass('defeat').removeClass('dunne').removeClass('inactive');
     }
     function getQuestionSequence () {
         var s = [];
@@ -228,10 +251,7 @@ const Quiz = function (t) {
         let p = $('#' + t);
         if (boo) {
             let d = self.score > 0 ? td.offset() : td.position();
-//            let adj = self.score > 0 ? 0 : $($('#river').find('table')[0]).position().left;
             let adj = self.score > 0 ? 0 : $('#playzone').position().left;
-//            console.log(adj);
-//            adj = 30;
             d = td.offset();
             ha.css({
                 display: boo ? 'inline-block' : 'none',
@@ -242,7 +262,9 @@ const Quiz = function (t) {
             });
             ha.animate({'border-top-width': '30px'}, 200);
         } else {
-            ha.animate({'border-top-width': '0px'}, 200);
+            if (!isFinalQuestion()) {
+                ha.animate({'border-top-width': '0px'}, 200);
+            }
         }
     }
     function advancePlayer () {
@@ -298,22 +320,38 @@ const Quiz = function (t) {
     }
     function setAutoComplete (boo) {
         self.autoComplete = boo;
+//        console.log(`autoComplete to ${boo}`);
     }
     function isFinalQuestion () {
 //        console.log(self.getWinTotal(), self.score);
         return self.getWinTotal() - self.score === 1;
     }
     function pushbackAvailable () {
-        return false;
+//        return true;
+        return self.rival.score > 1;
     }
     function moveonAvailable () {
         return true;
     }
     function importSVGs () {
-        let tmf = new ImportSVG('moveonfront');
-        let tmb = new ImportSVG('moveonback');
-        let tms = new ImportSVG('moveonshadow')
-    };
+        new ImportSVG('moveonfront');
+        new ImportSVG('moveonback');
+        new ImportSVG('moveonshadow');
+        new ImportSVG('pushbackfront');
+        new ImportSVG('pushbackback');
+        new ImportSVG('pushbackshadow');
+    }
+    function autoAnswer () {
+        let a = null;
+        let c = null;
+        self.q.options.forEach((o, i) => {
+            if (o === self.q.answer) {
+                c = i;
+            }
+        });
+        a = Math.random() > 0.2 ? c : Math.floor(Math.random() * 4);
+        self.onOption(a);
+    }
     self.setAutoComplete = setAutoComplete;
     self.setQuizType = setQuizType;
     self.reset = reset;
@@ -356,9 +394,9 @@ const Quiz = function (t) {
             $('#' + t).find('.option').addClass('inactive');
         }
         $('#' + t).find('.option').removeClass('reveal');
+        $('#' + t).find('.option').removeClass('selected');
     };
     self.askQuestion = function () {
-//        console.log('auto ' + self.autoComplete, t);
         var s, a, i;
         self.q = self.currentQuestions.shift();
         if (self.iWon()) {
@@ -393,8 +431,15 @@ const Quiz = function (t) {
             resizePlayer();
         }, 500);
         if (self.autoComplete) {
-            setTimeout(self.submit, 2000);
+            clearTimeout(self.autoInt);
+            self.autoInt = setTimeout(autoAnswer, getDelay('autoAnswer'));
         }
+    };
+    self.addToDebug =  function (f) {
+        if ($('#' + t).find('.' + f.replace('self.', '')).length === 0) {
+            $('#' + t).find('.debug').append('<p class="' + f.replace('self.', '') + '"></p>');
+        }
+        $('#' + t).find('.' + f.replace('self.', '')).html(f.replace('self.', '') + ': ' + eval(f));
     };
     self.showScore = function () {
         self.progressBar = $($('#' + t).find('.bar')[self.score]);
@@ -407,6 +452,7 @@ const Quiz = function (t) {
                 }
                 self.scorePending = s;
 //                console.log(`scorePending for ${t} to ${self.scorePending}`);
+                self.addToDebug('self.scorePending');
             }
         }
     };
@@ -417,6 +463,7 @@ const Quiz = function (t) {
                 self.scorePending = s;
 //                console.log(`score AND scorePending for ${t} to ${s}`);
                 self.showScore();
+                self.addToDebug('self.score');
             }
         }
     };
@@ -427,14 +474,7 @@ const Quiz = function (t) {
         });
     }
     function onOverlayComplete () {
-        if (self.autoComplete) {
-//            console.log(`self.iWon() ${self.iWon()}`);
-//            console.log(`isFinalQuestion() ${isFinalQuestion()}`);
-            if (!isFinalQuestion()) {
-//                console.log('this is not the final question, run the timeout');
-//                setTimeout(self.onScore, 1000);
-            }
-        }
+        //
     }
     self.showOverlay = function (boo) {
         let olay = $('#' + t).find('.overlay');
@@ -443,20 +483,26 @@ const Quiz = function (t) {
             olay.show();
             if (moveonAvailable()) {
                 self.buttonScore.show();
-//                self.buttonScore.hide().fadeIn();
-                self.buttonScore.animate({right: '-30px'}, 50).animate({right: '0px'}, 500);
+                self.buttonScore.animate({left: '470px'}, 50).animate({left: '440px'}, 500);
+                if (self.autoComplete) {
+                    self.scoreOrSteal();
+                }
             } else {
                 self.buttonScore.hide();
             }
             if (pushbackAvailable()) {
-                self.buttonSteal.show();
-                self.buttonSteal.animate({right: '-30px'}, 50).animate({right: '0px'}, 500);
+                setTimeout(function () {
+                    self.buttonSteal.show();
+                        self.buttonSteal.animate({left: '-130px'}, 50).animate({left: '-100px'}, 500);
+                    }, 300);
             } else {
                 self.buttonSteal.hide();
             }
             onOverlayComplete();
         } else {
             olay.hide();
+            self.buttonScore.hide();
+            self.buttonSteal.hide();
         }
     }
     self.showOverlayv1 = function (boo) {
@@ -489,11 +535,6 @@ const Quiz = function (t) {
         }
     };
     self.submit = function (boo) {
-//        console.log(`submit ${boo}`);
-//        console.log(`submit ${isFinalQuestion()}`)
-        if (self.autoComplete) {
-            boo = true;
-        }
         if (self.active) {
             self.activateOptions(false);
             if (boo) {
@@ -501,21 +542,25 @@ const Quiz = function (t) {
                 if (self.iWon()) {
                     console.log('i won')
                 }
-                self.showOverlay(true);
+                if (isFinalQuestion()) {
+                    self.scoreFunk();
+                } else {
+                    setTimeout(function () {
+                        self.showOverlay(true);
+                    }, getDelay('overlay'));
+                }
                 if (self.rival.score === 0) {
                     $('#' + t).find('.steal').addClass('inactive');
                 } else {
                     $('#' + t).find('.steal').removeClass('inactive');
                 }
             } else {
-                self.wronger();
+                self.showCorrect();
+                setTimeout(self.askQuestion, 3000);
             }
         }
         if (self.autoComplete) {
-            self.wronger();
-        }
-        if (isFinalQuestion()) {
-//            self.showProgress2(true);
+            self.showCorrect();
         }
     };
     self.nextQuestion = function () {
@@ -578,10 +623,12 @@ const Quiz = function (t) {
         });
     };
     self.showProgress2 = function (boo) {
-        var w = ($($('.race').find('td')[0]).width() / 2) + $($('.race').find('td')[self.score]).position().left + 40;
+        let s = boo ? self.score : self.scorePending - 1;
+        let w = ($($('.race').find('td')[0]).width() / 2) + $($('.race').find('td')[s]).position().left + 40;
         if (!boo) {
-            self.progressBar = $($('#' + t).find('.bar')[self.score - (boo ? 0 : (self.progressing ? 0 : 1))]);
+//            self.progressBar = $($('#' + t).find('.bar')[self.score - (boo ? 0 : (self.progressing ? 0 : 1))]);
         }
+//        console.log(`s is ${s}`);
         self.progressBar.stop();
         self.progressing = true;
         $('#arrow-' + t).css({
@@ -606,59 +653,66 @@ const Quiz = function (t) {
                         $('#arrow-' + t).find('img').removeClass('big');
                     }, 100);
                     if (boo) {
-                        if (!self.iWon()) {
-                            //
-                        } else {
+                        if (self.iWon()) {
                             self.rival.defeat();
                             self.victory();
                         }
+                    } else {
+                        setTimeout(advancePlayer, self.getDelay() * 1.1);
                     }
                 }
             }
         );
     };
-    self.wronger = function () {
+    self.showCorrect = function () {
         const op = $('#' + t).find('.option');
         for (var i = 0; i < op.length; i++) {
             if ($($(op[i]).find('span')[0]).html() === self.q.answer) {
                 $(op[i]).addClass('reveal');
-                if (!self.autoComplete) {
-                    setTimeout(self.askQuestion, 3000);
-                }
+
                 break;
             }
         }
     };
     self.victory = function () {
-        console.log('Vic Tory');
+//        console.log('Vic Tory');
         $('#' + t).find('.option').removeClass('inactive');
         $('#' + t).find('.option').addClass('inactive');
-//        $('#' + t).find('.option').addClass('victory');
-//        $('#' + t).find('.td').addClass('victory');
-        $('#' + t).find('.question').addClass('dunne')
-        $('#' + t).find('.option').addClass('dunne')
-        var f, i = 0, r = 0;
-        setInterval(function () {
-            r += 20;
-            f = Math.round(((Math.sin(r * Math.PI / 180) + 1) / 2) * $('#' + t).find('.bar').length);
-            $('#' + t).find('.bar').removeClass('victory');
-            $($('#' + t).find('.bar')[f]).addClass('victory');
-//            $($('#' + t).find('.bar')[i]).addClass('victory');
-            i = i < $('#' + t).find('.bar').length ? i + 1 : 0;
-        }, 75);
+        $('#' + t).find('.question').addClass('dunne');
+        $('#' + t).find('.option').addClass('dunne');
+        let o = {
+            player1: {
+                mid: {top: '-20px'},
+                end: {top: '0px'}
+            },
+            player2: {
+                mid: {bottom: '-20px'},
+                end: {bottom: '0px'}
+            }
+        };
+        setTimeout(function () {
+            $('#winbanner').addClass(t);
+            $('#winbanner').animate(o[t].mid, 300, function () {
+                $('#winbanner').css(o[t].end);
+            });
+        }, 1000);
         self.dunne();
+        console.log(`${t} wins`);
     };
     self.defeat = function () {
+        clearTimeout(self.autoInt);
         $('#' + t).find('.option').addClass('defeat');
         $('#' + t).find('.td').addClass('defeat');
+        $('#losebanner').addClass(t);
         self.dunne();
+        console.log(`${t} loses`);
     };
     self.dunne = function () {
         $('#' + t).find('.question').addClass('dunne');
         $('#' + t).find('.option').addClass('dunne');
     };
-    self.onScore = function () {
-        console.log('onScore');
+    self.scoreFunk = function () {
+//        console.log('onScore');
         self.updateScorePending(self.scorePending + 1);
         self.showOverlay(false);
 //        self.showProgress(true);
@@ -670,33 +724,68 @@ const Quiz = function (t) {
 //        console.log('onscore', isFinalQuestion())
 //        console.log(self.getGap())
     };
-    self.getQuestionSequence = getQuestionSequence;
-
-    $('#' + t).find('.option').on('click', function () {
-        self.submit($($(this).find('span')[0]).html() === self.q.answer);
-//        console.log($($(this).find('span')[0]).html(), self.q.answer);
-        if ($($(this).find('span')[0]).html() === self.q.answer) {
-            $(this).addClass('reveal')
+    self.stealFunk = function () {
+        self.rival.onSteal();
+        self.showOverlay(false);
+        self.nextQuestion();
+//        setTimeout(advancePlayer, self.getDelay() * 1.3);
+//        self.scoreFunk();
+    };
+    self.onSteal = function () {
+        self.updateScorePending(self.scorePending - 1);
+        self.showProgress2(false);
+    };
+    self.scoreOrSteal = function () {
+        let agression = 0.4;
+        let button = self.buttonScore;
+        let funk = self.scoreFunk;;
+        if (Math.random() < agression && pushbackAvailable()) {
+            button =  self.buttonSteal;
+            funk = self.stealFunk;
         }
+        clearTimeout(self.autoInt);
+        self.autoInt = setTimeout(function () {
+            button.addClass('oover');
+            clearTimeout(self.autoInt);
+            self.autoInt = setTimeout(function () {
+                button.removeClass('oover');
+                clearTimeout(self.autoInt);
+                self.autoInt = setTimeout(funk, 100);
+            }, 400);
+        }, 1000);
+    }
+    self.getQuestionSequence = getQuestionSequence;
+    self.onOption = function (i) {
+        var boo = self.q.options[i] === self.q.answer;
+        self.submit(boo);
+        if (boo) {
+            $($('#' + t).find('.option')[i]).addClass('reveal');
+        } else {
+            $($('#' + t).find('.option')[i]).addClass('selected');
+        }
+    }
+    let os = $('#' + t).find('.option');
+    for (var i = 0; i < os.length; i++) {
+        $(os[i]).attr('id', t + '_option_' + i);
+    }
+    $('#' + t).find('.option').click(function (ev) {
+        self.onOption(parseInt(ev.target.id.split('_').reverse()[0]));
     });
     self.buttonScore.on('click', function () {
-        self.onScore();
+        self.scoreFunk();
     });
     self.buttonSteal.on('click', function () {
-        self.rival.updateScorePending(self.rival.scorePending - 1);
-        self.rival.showProgress(false);
-        self.showOverlay(false);
-        setTimeout(self.nextQuestion, self.getDelay() * 1.3);
+        self.stealFunk();
     });
+
+
     $('.imgbutton').hover(function () {
         $(this).addClass('oover');
-//                $(this).find('.front').removeClass('raised');
-//                $(this).find('.front').addClass('lowered');
     }, function () {
         $(this).removeClass('oover');
-//                $(this).find('.front').addClass('raised');
-//                $(this).find('.front').removeClass('lowered');
     });
+
+
 //    resizePlayer();
     document.getElementsByTagName('body')[0].onresize = function () {
         resizePlayer();
@@ -709,6 +798,7 @@ const Quiz = function (t) {
     // defaults:
     setQuizType(1);
     importSVGs();
+    self.showOverlay(false);
 //    getQuestionSequence();
     quizzes[t] = self;
     return self;

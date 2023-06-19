@@ -1,8 +1,8 @@
 
-<svg  fill="#fff" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none" x="0px" y="0px" width="148px" height="84px" viewBox="0 0 148 84">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none" x="0px" y="0px" width="148px" height="90px" viewBox="0 0 148 90">
 <defs>
-<g id="Layer1_0_FILL">
-<path fill="#CCCCCC" stroke="none" d="
+<g id="moveonbackfill">
+<path fill="#FFFFFF" stroke="none" d="
 M 147.25 42.1
 Q 147.7 41.7 147.9 41.1 148.1 40.5 147.9 39.9 147.7 39.3 147.25 38.95
 L 117.25 15.5
@@ -18,11 +18,11 @@ Q 6.4 11.45 4.85 13.95
 L 4.9 13.95
 Q 0.35 21 0 29.95
 L 0 53.7
-Q 0.25 66 8.6 74.9 16.8 83.6 28.25 84
+Q 0 53.85 0 54 0.35 66.1 8.6 74.9 16.8 83.6 28.25 84
 L 28.3 84
 Q 28.85 84 29.45 84
 L 79.55 84
-Q 80.15 84 80.8 84 80.85 84 80.9 84 92.25 83.55 100.4 74.9 109 65.75 109 52.9
+Q 80.15 84 80.8 84 80.85 84 80.9 84 92.25 83.55 100.4 74.9 108.65 66.15 109 54 109 53.45 109 52.9
 L 109 49.95 112.8 49.95
 Q 113.4 49.95 114 49.9
 L 114 63.9
@@ -32,6 +32,6 @@ L 147.25 42.1 Z"/>
 </defs>
 
 <g transform="matrix( 1, 0, 0, 1, 0,0) ">
-<use xlink:href="#Layer1_0_FILL"/>
+<use xlink:href="#moveonbackfill"/>
 </g>
 </svg>

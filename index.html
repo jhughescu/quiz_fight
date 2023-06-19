@@ -102,7 +102,16 @@
                         <td class='topic_button type3'><div class=button>Technology</div></td>
                         <td class='topic_button type4'><div class=button>General Knowledge</div></td>
                     </tr>
-                    <tr class='race'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr class='race'>
+                        <td><div class='ticker'></div></td>
+                        <td><div class='ticker'></div></td>
+                        <td><div class='ticker'></div></td>
+                        <td><div class='ticker'></div></td>
+                        <td><div class='ticker'></div></td>
+                        <td><div class='ticker'></div></td>
+                        <td><div class='ticker'></div></td>
+                        <td><div class='ticker'></div></td>
+                    </tr>
 <!--                    <tr class='race'><td></td><td></td><td></td><td></td><td></td></tr>-->
                     <tr class='buttons player2'>
                         <td class='topic_button type1'><div class=button>Entertainment</div></td>
@@ -157,6 +166,8 @@
 //            q1.getQuestionSequence();
 //            q2.getQuestionSequence();
 //            qk.setNewQuestionBank('footy');
+            q1.setSkillLevel(0.4);
+            q2.setSkillLevel(0.7);
             q1.setAutoComplete(true);
             q2.setAutoComplete(true);
             q1.askQuestion();

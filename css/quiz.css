@@ -473,7 +473,11 @@ body {
     border-collapse: separate;
 }
 .race td {
+/*    position: relative;*/
     border-right: 0px;
+    text-align: center;
+/*    background-color: yellow;*/
+/*    width: 100%;*/
 }
 .race td:nth-child(4n-2) {
     border-left-color: #5B7813;
@@ -486,6 +490,36 @@ body {
 .race td:nth-child(4n-3) {
     border-color: #D1356F;
 /*    border-left-width: 4px;*/
+}
+.ticker {
+    position: relative;
+    width: 70px;
+    height: 100%;
+    left: calc(50% - 35px);
+    background-color: rgba(255,. 0, 0, 0.25);
+}
+.tickcontainer {
+    position: relative;
+    position: absolute;
+/*    margin: 0px calc(50% - 35px);*/
+    width: 70px;
+    height: 70px;
+/*    background-color: blueviolet;*/
+/*    left: calc(50% - 35px);*/
+}
+.tickcontainerplayer1 {
+    top: 54px;
+/*    display: none;.*/
+}
+.tickcontainerplayer2 {
+    top: 144px;
+}
+.tick {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    background-image: url(../assets/tick.svg);
+    background-size: cover;
 }
 .player1 td {
     border-top: 0px solid #05283e;

@@ -198,11 +198,12 @@ const Quiz = function (t) {
         progressing: null,
         active: false,
         buttonScore: $('#' + t).find('.moveon'),
-        buttonSteal: $('#' + t).find('.pushback')
+        buttonSteal: $('#' + t).find('.pushback'),
+        skill: 0.4
     };
     let delays = {
         overlay: 1200,
-        autoAnswer: {min: 1500, max: 4000}
+        autoAnswer: {min: 1500, max: 5000}
     };
     function getDelay (d) {
         var dr = 2000, ds, r;
@@ -275,12 +276,13 @@ const Quiz = function (t) {
         let s = self.score;
         let td = $($('.race').find('td')[s]);
         let x = td.offset().left - (td.width() / 2);
+        let gap = x - $('#' + t).position().left;
+        console.log(`advancePlayer, gap: ${gap}`);
         if (self.score === 0) {
             x = td.offset().left;
         }
         if (isFinalQuestion()) {
             x = $($('.race').find('td')[self.score - 1]).offset().left;
-
         }
         $('#'+ t).animate({
             left: x + 'px'
@@ -290,15 +292,12 @@ const Quiz = function (t) {
                 'background-color': 'white',
             });
             drawHeaderArrow(true);
+            if (gap < 0) {
+                // player is being pushed back, set up new question:
+                self.setNewQuestionBank(questionBankSet[self.score]);
+                self.askQuestion();
+            }
         });
-        if (s > 25) {
-            resetOverlay();
-            $('#'+ t).find('.underlay').delay(0).animate({
-                'left' : ($($('.race').find('td')[s]).width() * -1) + 'px'
-            }, 300, function () {
-                self.showOverlay(false);
-            });
-        }
     }
     function setQuizType (n) {
         // single or multi subject - multi changes subject (question bank) on correct answer
@@ -328,7 +327,8 @@ const Quiz = function (t) {
     }
     function pushbackAvailable () {
 //        return true;
-        return self.rival.score > 1;
+//        return self.score > 0 && self.rival.score > 1;
+        return self.score > 0 && (self.rival.score - self.score > 1);
     }
     function moveonAvailable () {
         return true;
@@ -349,9 +349,18 @@ const Quiz = function (t) {
                 c = i;
             }
         });
-        a = Math.random() > 0.2 ? c : Math.floor(Math.random() * 4);
+        a = Math.random() < self.skill ? c : Math.floor(Math.random() * 4);
         self.onOption(a);
     }
+    self.setSkillLevel = function (n) {
+        if (typeof(n) !== 'number') {
+            alert('skill must be a number');
+        } else if (n < 0 || n > 1) {
+            alert('skill must be a decimal between 0 and 1');
+        } else {
+            self.skill = n;
+        }
+    };
     self.setAutoComplete = setAutoComplete;
     self.setQuizType = setQuizType;
     self.reset = reset;
@@ -365,9 +374,11 @@ const Quiz = function (t) {
         self.rival = q;
     };
     self.setNewQuestionBank = function (id) {
+//        console.log(`setNewQuestionBank: ${id}`);
 //        let o = localStorage.getItem('_stuff');
         self.qID = id;
         self.currentQuestions = getQuestionSet(id);
+//        console.log(self.currentQuestions);
         /*
         let mid = self.currentQuestions[0].id;
         if (o === null) {
@@ -622,6 +633,36 @@ const Quiz = function (t) {
             }
         });
     };
+    self.renderTick = function () {
+        let s = self.score;
+        let tick = t + 'tick' + s;
+        let str = '<div class="tickcontainer tickcontainer' + t + '" id="' + tick + '"><div class="tick"></div></div>';
+        $($('.race').find('td')[s - 1]).find('.ticker').append(str);
+        $('#' + tick).find('.tick').animate(
+            {
+                width: '36px',
+                height: '36px',
+                top: '18px',
+                left: '18px'
+            }
+        );
+    };
+    self.shrinkTick = function (s) {
+        $('#' + t + 'tick' + s).find('.tick').animate(
+            {
+                width: '0px',
+                height: '0px',
+                top: '36px',
+                left: '36px'
+            }, 300, function () {
+                $('#' + t + 'tick' + s).remove();
+            }
+        );
+    };
+    self.playerReverse = function () {
+        advancePlayer();
+
+    };
     self.showProgress2 = function (boo) {
         let s = boo ? self.score : self.scorePending - 1;
         let w = ($($('.race').find('td')[0]).width() / 2) + $($('.race').find('td')[s]).position().left + 40;
@@ -634,6 +675,9 @@ const Quiz = function (t) {
         $('#arrow-' + t).css({
             left: '0px'
         });
+        if (!boo) {
+            self.shrinkTick(self.score);
+        }
         $('#arrow-' + t).animate(
             {
                 width: (w + 20) + 'px'
@@ -652,13 +696,15 @@ const Quiz = function (t) {
                     setTimeout(function () {
                         $('#arrow-' + t).find('img').removeClass('big');
                     }, 100);
+
                     if (boo) {
+                        self.renderTick();
                         if (self.iWon()) {
                             self.rival.defeat();
                             self.victory();
                         }
                     } else {
-                        setTimeout(advancePlayer, self.getDelay() * 1.1);
+                        setTimeout(self.playerReverse, self.getDelay() * 1.1);
                     }
                 }
             }
@@ -736,7 +782,7 @@ const Quiz = function (t) {
         self.showProgress2(false);
     };
     self.scoreOrSteal = function () {
-        let agression = 0.4;
+        let agression = 0.7;
         let button = self.buttonScore;
         let funk = self.scoreFunk;;
         if (Math.random() < agression && pushbackAvailable()) {

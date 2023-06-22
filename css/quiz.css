@@ -10,10 +10,11 @@ body {
     font-family: 'Roboto', serif;
     overflow: hidden;
     user-select: none;
+    color: white;
 }
 #bg {
     position: fixed;
-    background-color: blue;
+    background-color: #2f89a3;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -38,6 +39,159 @@ body {
 #debug p {
     margin: 10px 20px;
 }
+
+.button {
+    cursor: pointer;
+    pointer-events: auto;
+    text-align: center;
+}
+
+#topping {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    background-color: rgba(52, 103, 141, 0.68);
+    z-index: 99;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+#topping .content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 800px;
+    height: 470px;
+}
+#topping .bg {
+    width: 100%;
+    height: 100%;
+    background-color: #27b9e5;
+    background-color: #3BB0D1;
+    border: 11px solid white;
+    border-radius: 70px
+}
+#intro {
+    position: absolute;
+    top: 11px;
+    left: 11px;
+    width: 100%;
+    height: 100%;
+/*    background-color: blue;*/
+}
+#topping .introbuttons {
+    position: absolute;
+    width: 90%;
+    top: 90px;
+    left: 5%;
+/*    background-color: red;*/
+}
+#topping .large:hover {
+    background-color: #ff2677;
+}
+#topping .large {
+    position: relative;
+    width: 300px;
+    height: 180px;
+    background-color: #D1356F;
+    border: 3px solid white;
+    border-radius: 50px;
+    margin: 0px auto;
+}
+#topping .star {
+    position: relative;
+    width: 27px;
+    height: 27px;
+    background-image: url(../assets/cpustar.png);
+    background-repeat: no-repeat;
+    background-position: right;
+/*    background-color: black;*/
+    float: left;
+    padding-left: 10px;
+    opacity: 0.5;
+}
+#topping .star:hover {
+    opacity: 0.8;
+}
+#topping .star.selected {
+    opacity: 1;
+}
+#topping .mini {
+    position: relative;
+/*    left: 20px;*/
+    margin: 30px auto;
+    padding: 20px;
+    width: 300px;
+/*    background-color: blue;*/
+}
+#topping td {
+    text-align: center;
+    width: 50%;
+/*    height: 100px;*/
+}
+
+#topping .mini td {
+/*    min-height: 200px;*/
+}
+.screentypes {
+    height: 100px;
+}
+.screentype {
+/*    position: absolute;*/
+    width: 100px;
+    height: 80px;
+    margin: 0px auto;
+/*    background-color: red;*/
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8;
+}
+.screentype:hover {
+    opacity: 1;
+}
+#tabletop {
+    background-image: url(../assets/tabletop.png);
+}
+#wallmounted {
+    background-image: url(../assets/wallmounted.png);
+}
+#tabletop.selected {
+    background-image: url(../assets/tabletopselected.png);
+}
+#wallmounted.selected {
+    background-image: url(../assets/wallmountedselected.png);
+}
+.large .raised:after {
+    height: 25%;
+    top: 2.5%;
+    width: 86%;
+    left: 7%;
+    border-bottom-left-radius: 45px;
+    border-bottom-right-radius: 45px;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+}
+.large .text {
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+    font-size: 1.5em;
+    width: 100%
+}
+#topping .large {
+    background-repeat: no-repeat;
+    background-position: 90px 25px;
+}
+#versus {
+    background-image: url(../assets/versus.png);
+}
+#oneplayer {
+    background-image: url(../assets/oneplayer.png);
+}
 #river {
     position: absolute;
     z-index: 10;
@@ -48,6 +202,9 @@ body {
 }
 .player {
     height: 22.5%;
+    height: 24%;
+/*    height: 25%;*/
+/*    height: 30%;*/
     width: 408px;
     color: black;
 
@@ -69,7 +226,7 @@ body {
     height: 100%;
     width: 100%;
     background-color: #ffffff;
-    border-radius: 10px;
+/*    border-radius: 10px;*/
 }
 .question {
     padding: 8px 30px;
@@ -86,8 +243,15 @@ body {
     height: 36px;
     margin: 5px 0px;
     border-radius: 19px;
-    cursor: pointer;
+/*    cursor: pointer;*/
+    cursor: url(../assets/cursor.png), pointer;
+    cursor: crosshair;
     color: white;
+}
+#player1 .option {
+    cursor: url(../assets/cursorflip.svg), pointer;
+    cursor: crosshair;
+
 }
 .option:hover {
     background-color: #0A5974;
@@ -327,6 +491,7 @@ body {
     height: 90px;
 /*    background-color: black;*/
     cursor: pointer;
+/*    display: none;*/
 }
 .pushback {
     position: absolute;
@@ -398,15 +563,22 @@ body {
 }
 #player1 {
     top: 1.5%;
+    top: 0;
     left: 1.35%;
 /*    transform: rotate(180deg);*/
 }
 /* The two rules below work in conjunction with each other, comment out both or neither */
-#player1 .underlay, #player1 .overlay {
-/*    transform: rotate(180deg);*/
+#player1 .underlay {
+    transform: rotate(180deg);
 }
 #player1 .overlay {
-/*    top: 220px;*/
+    top: -69px;
+    top: 220px;
+    transform: scaleY(-1);
+}
+#player1 .overlay .text {
+/*    display: none;*/
+    transform: scaleX(-1);
 }
 #endzone {
     position: absolute;

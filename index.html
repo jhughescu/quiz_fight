@@ -16,7 +16,11 @@
 </head>
 
 <body>
-    <div id='debug'></div>
+    <div id='debug'>
+        <div id='timestamp'></div>
+        <div id='userInfo'></div>
+        <div id='reset'>&#8593 reset</div>
+    </div>
 
     <div id='topping'>
         <div class='content'>
@@ -246,7 +250,7 @@
 //            q2.askQuestion();
             setup();
         };
-        document.getElementById('debug').innerHTML = '<p>Build: ' + ts.timestamp.datetime + '</p>'
+//        document.getElementById('debug').innerHTML = '<p>Build: ' + ts.timestamp.datetime + '</p>'
 //        $('#arrow-player1').css('width', '400px');
     </script>
 </body>

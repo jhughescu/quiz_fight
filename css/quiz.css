@@ -27,17 +27,29 @@ body {
     position: fixed;
     pointer-events: none;
 /*    : 30px;*/
-    width: 600px;
-    height: 70px;
+    width: 400px;
+    height: 100px;
     right: 20px;
     top: 20px;
-    color: #0a2ec7;
+    color: #060d2c;
     background-color: rgba(255, 255, 255, 0.67);
     z-index: 999999999;
 /*    margin: 20px*/
 }
+#debug div {
+    padding: 5px;
+}
 #debug p {
     margin: 10px 20px;
+}
+#debug #reset {
+    position: absolute;
+    padding: 3px 20px;
+    outline: 2px solid black;
+    width: auto;
+    background-color: rgba(255, 255, 255, 0.57);
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 .button {

@@ -3,11 +3,49 @@ let questionBanks = {};
 let quizzes = {};
 let nseq = [3, 2, 1, 'GO'];
 let nseq2 = null;
+const clearMainDebug = function (prop) {
+    $('#debug').find('#' + prop).html('');
+}
+const addToMainDebug = function (prop, val, showProp) {
+    if ($('#debug').find('#' + prop).length > 0) {
+        $('#debug').find('#' + prop).append('<span>' + (showProp ? '<b>' + prop+ '</b>: ' : '') + val + '</span>')
+    } else {
+        console.log('no debug div for ' + prop);
+    }
+};
+const resetUserAnswerSummary = function () {
+    localStorage.removeItem('userAnswerReport');
+//    localStorage.removeItem
+}
+const showUserAnswerSummary = function () {
+    let db = $('#debug');
+    let s = localStorage.getItem('userAnswerReport');
+//    console.log(s);
+    if (s === 'null' || s === null) {
+
+        db.find('#reset').hide();
+    } else {
+        s = JSON.parse(s);
+        let t = s.average / 1000;
+        t = Math.round(t * 100) / 100;
+        let p = s.aPerc;
+        let str = `<b>timeToAnswer:</b> ${t} seconds<br><b>correct:</b> ${(Math.round(p * 100) / 100)}%`;
+        clearMainDebug('userInfo');
+        addToMainDebug('userInfo', str, false);
+        db.find('#reset').show();
+        db.find('#reset').off();
+        db.find('#reset').on('click', function () {
+            resetUserAnswerSummary();
+            showUserAnswerSummary();
+        });
+    }
+//    console.log('dunne');
+};
 const flipGo = function () {
     let cd = $('#countdown');
     cd.toggleClass('flipped');
     console.log('flipper')
-}
+};
 const blink = function (cd, s) {
     var p = cd.find('p');
     p.hide();
@@ -18,7 +56,7 @@ const blink = function (cd, s) {
     setTimeout(function () {
         p.show();
     }, 300);
-}
+};
 const spinner = function (cd) {
     cd.toggleClass('flipped')
     cd.removeClass('normal');
@@ -118,6 +156,8 @@ const setup = function () {
         $($('#topping').find('.content')).toggleClass('flipped');
     });
     $('#cpudifficulty').addClass('inactive');
+    addToMainDebug('timestamp', ts.timestamp.datetime, true);
+    showUserAnswerSummary();
 };
 const showIntro = function (t) {
     if (!t) {
@@ -762,11 +802,11 @@ const Quiz = function (t) {
             amendUserAnswerReport(0);
         }
     };
-    self.addToDebug =  function (f) {
-        if ($('#' + t).find('.' + f.replace('self.', '')).length === 0) {
-            $('#' + t).find('.debug').append('<p class="' + f.replace('self.', '') + '"></p>');
-        }
-        $('#' + t).find('.' + f.replace('self.', '')).html(f.replace('self.', '') + ': ' + eval(f));
+    self.addToDebug = function (f) {
+//        if ($('#' + t).find('.' + f.replace('self.', '')).length === 0) {
+//            $('#' + t).find('.debug').append('<p class="' + f.replace('self.', '') + '"></p>');
+//        }
+//        $('#' + t).find('.' + f.replace('self.', '')).html(f.replace('self.', '') + ': ' + eval(f));
     };
     self.showScore = function () {
         self.progressBar = $($('#' + t).find('.bar')[self.score]);
@@ -891,6 +931,7 @@ const Quiz = function (t) {
         } else {
             amendUserAnswerReport(1);
             amendUserAnswerReport(boo);
+            showUserAnswerSummary();
         }
     };
     self.nextQuestion = function () {

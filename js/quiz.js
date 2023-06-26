@@ -651,7 +651,9 @@ const Quiz = function (t) {
             av.aPerc = (av.aCorrect / av.aCount) * 100;
         }
         if (write) {
-            localStorage.setItem(id, JSON.stringify(av))
+            console.log('write ' + id + 'Summary')
+            localStorage.setItem(id, JSON.stringify(av));
+            localStorage.setItem(id + 'Summary', JSON.stringify({timeToAnswer: av.average, correctPercentage: av.aPerc}));
         } else {
             console.log('outlier, not writing (average is ' + av.average + ', gap is ' + gap + ')');
         }

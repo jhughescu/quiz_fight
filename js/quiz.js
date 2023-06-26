@@ -1,7 +1,140 @@
 let questionBankSet = null;
 let questionBanks = {};
 let quizzes = {};
+let nseq = [3, 2, 1, 'GO'];
+let nseq2 = null;
+const flipGo = function () {
+    let cd = $('#countdown');
+    cd.toggleClass('flipped');
+    console.log('flipper')
+}
+const blink = function (cd, s) {
+    var p = cd.find('p');
+    p.hide();
+    p.html(s);
+    if (typeof(s) === 'string') {
+        cd.addClass(s.toLowerCase());
+    }
+    setTimeout(function () {
+        p.show();
+    }, 300);
+}
+const spinner = function (cd) {
+    cd.toggleClass('flipped')
+    cd.removeClass('normal');
+    setTimeout(function () {
+        cd.toggleClass('normal');
+    }, 500);
+    if (nseq2.length > 0) {
+        setTimeout(function () {
+            countdown()
+        }, 1200);
+    } else {
+        setTimeout(function () {
+            cd.fadeOut(200);
+            setTimeout(function () {
+                startQuiz();
+            }, 500);
+        }, 1500)
+    }
+};
+const countdown = function () {
+    let cd = $('#countdown');
+    cd.hide();
+    cd.fadeIn(200);
+    cd.removeClass('go');
+    blink(cd, nseq2.shift());
+    spinner(cd);
+};
+const theCountdown = function () {
+    $('#countdownwrapper').show();
+    nseq2 = nseq.slice()
+    countdown();
+};
+const preload = function (a) {
+    $(a).each(function() {
+        (new Image()).src = this;
+        console.log()
+    });
+};
+const ready = function (boo) {
+    boo ? $('#start').show() : $('#start').hide();
+};
+const setCpuLevel= function (n) {
+    s = 0.2 + (0.6 * (n / 3));
+//    console.log(s);
+    q1.setSkillLevel(s);
+}
+const setup = function () {
+    let cpuLevel = null;
+    let platformType = 0;
+    let pre = [
+        'assets/wallmountedselected.png',
+        'assets/tabletopselected.png'
+    ];
+    preload(pre);
+    $('.star').off('click');
+    $('.star').on('click', function () {
+        $('.star').removeClass('selected');
+        let n = parseInt($(this).attr('id').replace(/[a-z]/gm, ''));
+        setCpuLevel(n);
+//        console.log(`cpuLevel set to ${cpuLevel}`);
+        let screen = 0;
+        for (var i = 0; i < n; i++) {
+            $($('.star')[i]).addClass('selected');
+        };
+        ready(true);
+    });
+    $('.screentype').off('click');
+    $('.screentype').on('click', function () {
+        $('.screentype').removeClass('selected');
+        $(this).addClass('selected');
+        platformType = $(this).attr('id').replace(/[a-z]/gm, '');
+//        console.log(`setting platformType to ${platformType}`);
+        ready(true);
+    });
+    $('.typeselect').off('click');
+    $('.typeselect').on('click', function () {
+        ready(false);
+        $('.typeselect').removeClass('selected');
+        $(this).addClass('selected');
+        if ($(this).attr('id') === 'versus') {
+            $('#cpudifficulty').addClass('inactive');
+            ready(platformType > 0);
+//            console.log(`platformType ${platformType}`);
+        } else {
+            $('#cpudifficulty').removeClass('inactive');
+//            console.log(`cpuLevel ${cpuLevel}`);
+            q1.setAutoComplete(true);
+            q2.setAutoComplete(false);
+            ready(cpuLevel > 0);
+        }
 
+    });
+    $('#start').on('click', function () {
+        go();
+    });
+    $('#rotator').on('click', function () {
+        $($('#topping').find('.content')).toggleClass('flipped');
+    });
+    $('#cpudifficulty').addClass('inactive');
+};
+const showIntro = function (t) {
+    if (!t) {
+        $('#intro').hide();
+        $('#topping').find('.bg').hide();
+    } else {
+        $('#intro').show();
+        $('#topping').find('.bg').show();
+    }
+}
+const showTopping = function (t) {
+    if (!t) {
+        $('#topping').hide();
+    } else {
+        $('#topping').show();
+    }
+}
 const storeAggregate = function (id, val) {
     let ls = localStorage.getItem(id);
 
@@ -205,6 +338,7 @@ const Quiz = function (t) {
         q: null,
         qID: null,
         aDelay: {min: 400, max: 5000},
+//        aDelay: {min: 2000, max: 5000},
         score: 0,
         scorePending: null,
         rival: null,
@@ -221,14 +355,18 @@ const Quiz = function (t) {
     };
     let delays = {
         overlay: 1200,
-        autoAnswer: {min: 1500, max: 5000}
+        autoAnswer: {min: 1500, max: 7000}
     };
     let questionReport = null;
+    let aTime = null;
     function go () {
         // start the game with settings applied
         $('#' + t).show();
+        self.askQuestion();
+//        console.log(`${t} go`)
     }
-    function getDelay (d) {
+    function getSpecificDelay (d, skilled) {
+//        console.log(1 - self.skill);
         var dr = 2000, ds, r;
         if (delays.hasOwnProperty(d)) {
             if (typeof(delays[d]) === 'number') {
@@ -236,7 +374,10 @@ const Quiz = function (t) {
             } else {
                 ds = delays[d];
                 r = Math.random();
-                dr = ds.min + Math.round(r * (ds.max - ds.min));
+                dr = (r * (ds.max - ds.min)) * (skilled ? (1 - self.skill) : 1);
+                dr = ds.min + dr;
+                dr = Math.round(dr);
+//                console.log(self.skill, dr);
             }
         } else {
             console.log('no delay set with name ' + d + ', returning default (2000)');
@@ -308,9 +449,17 @@ const Quiz = function (t) {
 //            console.log('no more');
             return;
         }
+
         let s = self.score;
         let td = $($('.race').find('td')[s]);
-        console.error('intermittent issue occurs here, problem finding "left" of td.offset() below:');
+        console.log(`advP s is ${s} and there are ${$('.race').find('td').length} tds`);
+        //
+        //
+        //
+//        console.error('intermittent issue occurs here, problem finding "left" of td.offset() below:');
+        //
+        //
+        //
         let x = td.offset().left - (td.width() / 2);
         let gap = x - $('#' + t).position().left;
 //        console.log(`advancePlayer, gap: ${gap}`);
@@ -386,10 +535,13 @@ const Quiz = function (t) {
             }
         });
         a = Math.random() < self.skill ? c : Math.floor(Math.random() * 4);
-        self.onOption(a);
+        let boo = self.onOption(a);
+        amendAnswerReport(boo ? 'correct' : 'incorrect');
     }
     function amendQuestionReport (q) {
         // build the question aggregate lists for localStorage (dev method, can be removed in deployment)
+//        console.log('amendQuestionReport:');
+//        console.log(q);
         let id = q.bank.replace(/ /gm, '_');
         let qr = questionReport;
         let qrls = localStorage.getItem('questionReport');
@@ -417,7 +569,92 @@ const Quiz = function (t) {
         questionReport = qr;
 //        console.log(questionReport);
         localStorage.setItem('questionReport', JSON.stringify(questionReport));
+//        localStorage.setItem('questionReportV1', JSON.stringify(questionReport));
 
+    }
+    let aTimeAv = null;
+    function amendAnswerReport (type, val) {
+        let l = `skill_${self.skill.toString().replace('.', '_')}`;
+        let answerReport = localStorage.getItem('answerReport');
+        if (answerReport === null) {
+            answerReport = {};
+        } else {
+            answerReport = JSON.parse(answerReport);
+        }
+        if (!answerReport.hasOwnProperty(l)) {
+            answerReport[l] = {};
+        }
+        if (!answerReport[l].hasOwnProperty('correct')) {
+            answerReport[l] = {correct: 0, incorrect: 0, correctPerc: 0};
+        }
+        if (type === 'aTime') {
+            // time to answer; store average
+            if (!answerReport[l].hasOwnProperty('timeToAnswer')) {
+                answerReport[l].timeToAnswer = {total: 0, count: 0, av: 0};
+            }
+            let tta = answerReport[l].timeToAnswer;
+            tta.count += 1;
+            tta.total = tta.total + val;
+            tta.av = tta.total / tta.count;
+            answerReport[l].avTime = tta.av;
+        }
+        if (type === 'correct' || type === 'incorrect') {
+            let ar = answerReport[l];
+            ar[type] += 1;
+            ar.correctPerc = ar.correct / (ar.correct + ar.incorrect) * 100;
+        }
+        let summary = {
+//            correctPercentage: answerReport[l].correctPerc,
+//            timeToAnswer: answerReport[l].avTime
+        };
+        Object.entries(answerReport).forEach((v, k) => {
+//            console.log(v);
+            summary[v[0]] = {
+                correctPercentage: v[1].correctPerc,
+                timeToAnswer: v[1].avTime
+            };
+        });
+        localStorage.setItem('answerReport', JSON.stringify(answerReport));
+        localStorage.setItem('answerReportSummary', JSON.stringify(summary));
+    }
+    function amendUserAnswerReport (n) {
+//        console.log(`aur: ${n}, ${typeof(n)}`);
+        let d = new Date();
+        let t = d.getTime();
+        let gap = null;
+        let write = true;
+        let id = 'userAnswerReport';
+        let av = localStorage.getItem(id);
+        if (av === null) {
+            av = {average: 0, total: 0, count: 0, aCount: 0, aCorrect: 0, aIncorrect: 0, aPerc: 0};
+        } else {
+            av = JSON.parse(av);
+        }
+        if (typeof(n) === 'number') {
+            // this is a timer update
+            if (n === 0) {
+                aTime = t;
+            } else {
+                gap = t - aTime;
+                if (gap > (av.average * 2) && av.average > 0) {
+                    write = false;
+                }
+                av.count += 1;
+                av.total += gap;
+                av.average = av.total / av.count;
+            }
+        }
+        if (typeof(n) === 'boolean') {
+            // this is a correct/incorrect answer response
+            av.aCount += 1;
+            av[n ? 'aCorrect' : 'aIncorrect'] += 1;
+            av.aPerc = (av.aCorrect / av.aCount) * 100;
+        }
+        if (write) {
+            localStorage.setItem(id, JSON.stringify(av))
+        } else {
+            console.log('outlier, not writing (average is ' + av.average + ', gap is ' + gap + ')');
+        }
     }
     self.setSkillLevel = function (n) {
         if (typeof(n) !== 'number') {
@@ -432,6 +669,7 @@ const Quiz = function (t) {
     self.setQuizType = setQuizType;
     self.reset = reset;
     self.go = go;
+    self.getSpecificDelay = getSpecificDelay;
     self.getDelay = function () {
         return self.aDelay.min;
     };
@@ -479,7 +717,7 @@ const Quiz = function (t) {
         var s, a, i;
         self.q = self.currentQuestions.shift();
 //        console.log(self.q);
-        amendQuestionReport(self.q);
+
         if (self.iWon()) {
             console.log('i won, so stop here')
             return;
@@ -511,9 +749,15 @@ const Quiz = function (t) {
             $('#' + t).find('.question').removeClass('blank');
             resizePlayer();
         }, 500);
+
+        amendQuestionReport(self.q);
         if (self.autoComplete) {
             clearTimeout(self.autoInt);
-            self.autoInt = setTimeout(autoAnswer, getDelay('autoAnswer'));
+            let aTime = self.getSpecificDelay('autoAnswer', true);
+            amendAnswerReport('aTime', aTime);
+            self.autoInt = setTimeout(autoAnswer, aTime);
+        } else {
+            amendUserAnswerReport(0);
         }
     };
     self.addToDebug =  function (f) {
@@ -628,7 +872,7 @@ const Quiz = function (t) {
                 } else {
                     setTimeout(function () {
                         self.showOverlay(true);
-                    }, getDelay('overlay'));
+                    }, self.getSpecificDelay('overlay'));
                 }
                 if (self.rival.score === 0) {
                     $('#' + t).find('.steal').addClass('inactive');
@@ -642,6 +886,9 @@ const Quiz = function (t) {
         }
         if (self.autoComplete) {
             self.showCorrect();
+        } else {
+            amendUserAnswerReport(1);
+            amendUserAnswerReport(boo);
         }
     };
     self.nextQuestion = function () {
@@ -735,6 +982,13 @@ const Quiz = function (t) {
     };
     self.showProgress2 = function (boo) {
         let s = boo ? self.score : self.scorePending - 1;
+        if ($($('.race').find('td')[s]).position() === undefined) {
+            console.log(`boo ${boo}`);
+            console.log(`self.score ${self.score}`);
+            console.log(`self.scorePending ${self.scorePending}`);
+        }
+            console.log(`s is ${s} and there are ${$('.race').find('td').length} tds`);
+
         let w = ($($('.race').find('td')[0]).width() / 2) + $($('.race').find('td')[s]).position().left + 40;
         if (!boo) {
 //            self.progressBar = $($('#' + t).find('.bar')[self.score - (boo ? 0 : (self.progressing ? 0 : 1))]);
@@ -813,7 +1067,7 @@ const Quiz = function (t) {
             });
         }, 1000);
         self.dunne();
-        console.log(`${t} wins`);
+//        console.log(`${t} wins`);
         storeAggregate(t, 'win');
         setTimeout(window.reset, 3000);
     };
@@ -852,6 +1106,7 @@ const Quiz = function (t) {
     self.onSteal = function () {
         self.updateScorePending(self.scorePending - 1);
         self.showProgress2(false);
+        self.showOverlay(false);
     };
     self.scoreOrSteal = function () {
         let agression = 0.7;
@@ -881,6 +1136,7 @@ const Quiz = function (t) {
         } else {
             $($('#' + t).find('.option')[i]).addClass('selected');
         }
+        return boo;
     }
     let os = $('#' + t).find('.option');
     for (var i = 0; i < os.length; i++) {
@@ -921,19 +1177,6 @@ const Quiz = function (t) {
     quizzes[t] = self;
 //    go();
 
-    $('.star').off('click');
-    $('.star').on('click', function () {
-        $('.star').removeClass('selected');
-        let n = parseInt($(this).attr('id').replace(/[a-z]/gm, ''));
-        for (var i = 0; i < n; i++) {
-            $($('.star')[i]).addClass('selected');
-        }
-    });
-    $('.screentype').off('click');
-    $('.screentype').on('click', function () {
-        $('.screentype').removeClass('selected');
-        $(this).addClass('selected');
-    });
     return self;
 };
 const checkQuestions = function () {
@@ -972,10 +1215,21 @@ const reset = function () {
     }
 }
 const go = function () {
+    console.log('GO!');
+    showIntro(false);
+//    showTopping(false);
+    theCountdown();
+    for (var i in quizzes) {
+//        quizzes[i].go();
+    }
+}
+const startQuiz = function () {
+    showTopping(false);
     for (var i in quizzes) {
         quizzes[i].go();
     }
 }
 window.reset = reset;
 window.go = go;
+window.setup = setup;
 reset();

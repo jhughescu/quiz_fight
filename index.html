@@ -22,19 +22,20 @@
         <div class='content'>
             <div class='bg'></div>
             <div id='intro'>
+                <div id='rotator'></div>
                 <table role='presentation' class='introbuttons'><tbody>
                     <tr><td></td><td></td></tr>
                     <tr>
 
                         <td>
-                            <div class='button large versus' id='versus'>
+                            <div class='button large typeselect versus' id='versus'>
                                 <div class='text'>Versus</div>
                                 <div class='raised '></div>
                             </div>
                         </td>
 
                         <td>
-                            <div class='button large versus' id='oneplayer'>
+                            <div class='button large typeselect oneplayer' id='oneplayer'>
                                 <div class='text'>One Player</div>
                                 <div class='raised '></div>
                             </div>
@@ -49,13 +50,13 @@
                                         <td>
                                             <div class='screentypes'>
                                                 <span>Tabletop</span>
-                                                <div class='button screentype' id='tabletop'></div>
+                                                <div class='button screentype' id='type1'></div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class='screentypes'>
                                                 <span>Wall mounted</span>
-                                                <div class='button screentype' id='wallmounted'></div>
+                                                <div class='button screentype' id='type2'></div>
                                             </div>
                                         </td>
                                     </tr>
@@ -63,7 +64,7 @@
                             </table>
                         </td>
                         <td>
-                            <table role='presentation' class='mini'>
+                            <table role='presentation' class='mini' id='cpudifficulty'>
                                 <tbody>
                                     <tr>
                                         <td>CPU Difficulty</td>
@@ -78,6 +79,15 @@
 
                     </td></tr>
                 </tbody></table>
+                <div class='button large start' id='start'>
+                    <div class='text'>START</div>
+                    <div class='raised '></div>
+                </div>
+            </div>
+            <div id='countdownwrapper'>
+                <div id='countdown' class='countdown'>
+                    <div id='numbers'><p></p></div>
+                </div>
             </div>
         </div>
     </div>
@@ -230,10 +240,11 @@
 //            qk.setNewQuestionBank('footy');
             q1.setSkillLevel(0.4);
             q2.setSkillLevel(0.7);
-            q1.setAutoComplete(true);
-            q2.setAutoComplete(true);
-            q1.askQuestion();
-            q2.askQuestion();
+//            q1.setAutoComplete(true);
+//            q2.setAutoComplete(true);
+//            q1.askQuestion();
+//            q2.askQuestion();
+            setup();
         };
         document.getElementById('debug').innerHTML = '<p>Build: ' + ts.timestamp.datetime + '</p>'
 //        $('#arrow-player1').css('width', '400px');

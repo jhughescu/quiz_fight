@@ -3,6 +3,17 @@ let questionBanks = {};
 let quizzes = {};
 let nseq = [3, 2, 1, 'GO'];
 let nseq2 = null;
+let players = {
+    count: 0,
+//    list: ['player2', 'player1']
+};
+let playerList = ['player2', 'player1'];
+let platforms = {
+    current: null,
+    list: ['tabletop', 'wallmounted']
+};
+let cpuLevel = 0;
+// the default is for player2 (the lower screen) to be the main player in vs mode
 const clearMainDebug = function (prop) {
     $('#debug').find('#' + prop).html('');
 }
@@ -95,69 +106,210 @@ const preload = function (a) {
         console.log()
     });
 };
-const ready = function (boo) {
-    boo ? $('#start').show() : $('#start').hide();
-};
-const setCpuLevel= function (n) {
-    s = 0.2 + (0.6 * (n / 3));
-//    console.log(s);
-    q1.setSkillLevel(s);
+const allReady = function () {
+    let ar = false;
+    console.log(`${players.count} players`);
+    console.log(`cpuLevel: ${cpuLevel}`);
+    console.log(`platforms.current: ${platforms.current}`);
+    if (players.count === 1) {
+        if (cpuLevel > 0) {
+            ar = true;
+        }
+    }
+    if (players.count === 2) {
+        if (platforms.current !== null) {
+            ar = true;
+        }
+    }
+    return ar;
 }
+const ready = function (boo) {
+    if (boo !== false) {
+        boo = allReady();
+    }
+//    console.log(`ready? ${boo}`);
+    var bSet = players.count > 1 ? $('.start') : $('#start' + playerList[0]);
+    boo ? $('#rotator').hide() : '';
+//    debugger;
+    boo ? bSet.show() : bSet.hide();
+    boo ? console.log('yes!') : console.log('no!!');
+};
+const setCpuLevel = function (n) {
+    let s = 0;
+    if (n > 0) {
+        s = 0.2 + (0.6 * (n / 3));
+    }
+    console.log(`set cpu level to ${s}, n: ${n}`);
+    cpuLevel =  s;
+    if (q1) {
+        q1.setSkillLevel(s);
+    }
+    $('.star').removeClass('selected');
+    for (var i = 0; i < n; i++) {
+        $($('.star')[i]).addClass('selected');
+    };
+    if (n > 0) {
+        ready(true);
+    }
+};
 const setup = function () {
-    let cpuLevel = null;
     let platformType = 0;
     let pre = [
         'assets/wallmountedselected.png',
         'assets/tabletopselected.png'
     ];
+    const getMainPlayer = function () {
+        return playerList[1];
+    };
+    const setOrientation = function () {
+        let mainO = parseInt(playerList[0].replace(/[a-z]/gm, ''));
+        let wm = $('#typewallmounted').find('.button');
+//        console.log(mainO);
+//        console.log(wm);
+        // wallmounted is not possible in upside down mode (1)
+        if (mainO === 1) {
+            wm.addClass('inactive');
+            setPlatformType(1);
+//            wm.css('opacity', 0.5);
+        } else {
+            wm.removeClass('inactive');
+            setPlatformType(0);
+        }
+    };
+    const setPlatformType = function (t) {
+        platformType = t;
+//        console.log(t);
+        if (t > 1) {
+            $('#playzone').find('.' + getMainPlayer()).removeClass('upsidedown');
+        } else {
+            $('#playzone').find('.' + getMainPlayer()).addClass('upsidedown');
+        }
+        $('.screentype').removeClass('selected');
+        platforms.current = platforms.list[platformType - 1];
+        $('#' + getMainPlayer()).find('.qZone, .overlay').removeClass(platforms.list.join(' '));
+        $('#' + getMainPlayer()).find('.qZone, .overlay').addClass(platforms.current);
+        $('#start' + getMainPlayer()).removeClass(platforms.list.join(' '));
+        $('#start' + getMainPlayer()).addClass(platforms.current);
+        $('#type' + platformType).addClass('selected');
+        ready(players.count > 0);
+    };
+    const setPlatformTypeV1 = function (t) {
+        platformType = t;
+//        console.log(t);
+        if (t > 1) {
+            $('#playzone').find('.player1').removeClass('upsidedown');
+        } else {
+            $('#playzone').find('.player1').addClass('upsidedown');
+        }
+        $('.screentype').removeClass('selected');
+        platforms.current = platforms.list[platformType - 1];
+        $('#player1').find('.qZone, .overlay').removeClass(platforms.list.join(' '));
+        $('#player1').find('.qZone, .overlay').addClass(platforms.current);
+        $('#startplayer1').removeClass(platforms.list.join(' '));
+        $('#startplayer1').addClass(platforms.current);
+        $('#type' + platformType).addClass('selected');
+        ready(players.count > 0);
+    };
+    const setGameType = function (id) {
+        ready(false);
+        let pc = players.count;
+        players.count = 0;
+        $('.typeselect').removeClass('selected');
+        $('#' + id).addClass('selected');
+        if (id === 'versus') {
+            $('#cpudifficulty').addClass('inactive');
+            $('.screentypes').show();
+            if (pc !== 2) {
+                setPlatformType(0);
+            }
+            q1.setAutoComplete(false);
+            q2.setAutoComplete(false);
+            players.count = 2;
+            ready(platformType > 0);
+        } else {
+            $('#cpudifficulty').removeClass('inactive');
+            $('.screentypes').hide();
+            setPlatformType(2);
+            q1.setAutoComplete(true);
+            q2.setAutoComplete(false);
+            players.count = 1;
+            ready(cpuLevel > 0);
+        }
+    };
+    const autoLaunch = function () {
+        setTimeout(function () {
+            setGameType('oneplayer');
+        }, 2000);
+        setTimeout(function () {
+            setCpuLevel(3);
+        }, 4000);
+        setTimeout(function () {
+            go();
+        }, 5000);
+    };
+    setPlatformType(0);
+    setCpuLevel(0);
     preload(pre);
+    $('#cpudifficulty').addClass('inactive');
+    $('.screentypes').show();
     $('.star').off('click');
     $('.star').on('click', function () {
         $('.star').removeClass('selected');
         let n = parseInt($(this).attr('id').replace(/[a-z]/gm, ''));
         setCpuLevel(n);
-//        console.log(`cpuLevel set to ${cpuLevel}`);
-        let screen = 0;
-        for (var i = 0; i < n; i++) {
-            $($('.star')[i]).addClass('selected');
-        };
-        ready(true);
+//        let screen = 0;
+//        for (var i = 0; i < n; i++) {
+//            $($('.star')[i]).addClass('selected');
+//        };
+//        ready(true);
     });
     $('.screentype').off('click');
     $('.screentype').on('click', function () {
-        $('.screentype').removeClass('selected');
-        $(this).addClass('selected');
-        platformType = $(this).attr('id').replace(/[a-z]/gm, '');
-//        console.log(`setting platformType to ${platformType}`);
-        ready(true);
+        setPlatformType($(this).attr('id').replace(/[a-z]/gm, ''));
     });
+    $('.typeselect').removeClass('selected');
     $('.typeselect').off('click');
     $('.typeselect').on('click', function () {
-        ready(false);
-        $('.typeselect').removeClass('selected');
-        $(this).addClass('selected');
-        if ($(this).attr('id') === 'versus') {
-            $('#cpudifficulty').addClass('inactive');
-            ready(platformType > 0);
-//            console.log(`platformType ${platformType}`);
-        } else {
-            $('#cpudifficulty').removeClass('inactive');
-//            console.log(`cpuLevel ${cpuLevel}`);
-            q1.setAutoComplete(true);
-            q2.setAutoComplete(false);
-            ready(cpuLevel > 0);
+        let id = $(this).attr('id');
+        setGameType(id);
+
+    });
+    $('.start').removeClass('selected inactive startselected');
+    $('.start').find('.text').show();
+    $('.start').on('click', function () {
+        $(this).addClass('selected inactive startselected');
+        $(this).find('.text').hide();
+        if ($('#intro').find('.startselected').length === players.count) {
+            go();
         }
 
     });
-    $('#start').on('click', function () {
-        go();
-    });
     $('#rotator').on('click', function () {
         $($('#topping').find('.content')).toggleClass('flipped');
+        let u = $('#topping').find('.content').css('transform').indexOf('-1', 0) === -1;
+//        let a = players.list.slice(0);
+//        let a = playerList.slice(0);
+//        a = a.sort(function () {return u ? -1 : 1});
+//        playerList = playerList.sort(function () {return u ? -1 : 1});
+//        playerList = a.slice(0);
+//        console.log(u);
+        playerList.reverse();
+        setOrientation();
+        console.log(playerList);
     });
-    $('#cpudifficulty').addClass('inactive');
+    $('#countdownwrapper').hide();
+    $('.start').hide();
+//    $('.content').hide();
+//    $('#playagain').hide();
+//    $('#playagain').addClass('inactive');
+//    $('#cpudifficulty').addClass('inactive');
     addToMainDebug('timestamp', ts.timestamp.datetime, true);
     showUserAnswerSummary();
+    showIntro(true);
+    showTopping(true);
+    $('.content').show();
+//    restart();
+//    autoLaunch();
 };
 const showIntro = function (t) {
     if (!t) {
@@ -378,6 +530,8 @@ const Quiz = function (t) {
         q: null,
         qID: null,
         aDelay: {min: 400, max: 5000},
+
+//        aDelay: {min: 50, max: 60},
 //        aDelay: {min: 2000, max: 5000},
         score: 0,
         scorePending: null,
@@ -391,12 +545,17 @@ const Quiz = function (t) {
         active: false,
         buttonScore: $('#' + t).find('.moveon'),
         buttonSteal: $('#' + t).find('.pushback'),
+        timers: {askQ: 0},
         skill: 0.4
     };
     let delays = {
         overlay: 1200,
         autoAnswer: {min: 1500, max: 7000}
     };
+//    delays = {
+//        overlay: 200,
+//        autoAnswer: {min: 300, max: 400}
+//    };
     let questionReport = null;
     let aTime = null;
     function go () {
@@ -430,8 +589,11 @@ const Quiz = function (t) {
         advancePlayer();
         self.resetProgress();
         self.getQuestionSequence();
-        self.askQuestion();
+//        console.log('the reset');
+//        self.askQuestion();
+        self.activateOptions(false);
         self.showOverlay(false);
+        $('#' + t).hide();
         $('#losebanner').removeClass(t);
         $('#winbanner').removeClass(t);
         $('div').removeClass('defeat').removeClass('dunne').removeClass('inactive');
@@ -473,7 +635,8 @@ const Quiz = function (t) {
                 if (t === 'player2') {
                     css.left = '0px';
                 } else {
-                    css.left = p.width() / 2 + 'px';
+                    css.left = '0px';
+//                    css.left = p.width() / 2 + 'px';
                 }
             }
             ha.css(css);
@@ -520,7 +683,12 @@ const Quiz = function (t) {
             if (gap < 0) {
                 // player is being pushed back, set up new question:
                 self.setNewQuestionBank(questionBankSet[self.score]);
-                self.askQuestion();
+                console.log('the advancePlayer method calls self.askQuestion!!');
+                if (self.score > 0) {
+                    self.askQuestion();
+                } else {
+                    console.log('no, not doing that, we have reset');
+                }
             }
         });
     }
@@ -746,16 +914,21 @@ const Quiz = function (t) {
 
     };
     self.activateOptions = function (boo) {
+//        console.log(boo);
+//        debugger;
         self.active = boo;
         if (boo) {
             $('#' + t).find('.option').removeClass('inactive');
+//            $('#' + t).find('#qZone').show();
         } else {
             $('#' + t).find('.option').addClass('inactive');
+//            $('#' + t).find('#qZone').hide();
         }
         $('#' + t).find('.option').removeClass('reveal');
         $('#' + t).find('.option').removeClass('selected');
     };
     self.askQuestion = function () {
+//        console.log('ask me ask me ask me');
         var s, a, i;
         self.q = self.currentQuestions.shift();
 //        console.log(self.q);
@@ -923,7 +1096,7 @@ const Quiz = function (t) {
                 }
             } else {
                 self.showCorrect();
-                setTimeout(self.askQuestion, 3000);
+                self.timers.askQ = setTimeout(self.askQuestion, 3000);
             }
         }
         if (self.autoComplete) {
@@ -1026,17 +1199,14 @@ const Quiz = function (t) {
     self.showProgress2 = function (boo) {
         let s = boo ? self.score : self.scorePending - 1;
         if ($($('.race').find('td')[s]).position() === undefined) {
+            console.log(`s is ${s} and there are ${$('.race').find('td').length} tds`);
             console.log(`boo ${boo}`);
             console.log(`self.score ${self.score}`);
             console.log(`self.scorePending ${self.scorePending}`);
         }
-            console.log(`s is ${s} and there are ${$('.race').find('td').length} tds`);
+
 
         let w = ($($('.race').find('td')[0]).width() / 2) + $($('.race').find('td')[s]).position().left + 40;
-        if (!boo) {
-//            self.progressBar = $($('#' + t).find('.bar')[self.score - (boo ? 0 : (self.progressing ? 0 : 1))]);
-        }
-//        console.log(`s is ${s}`);
         self.progressBar.stop();
         self.progressing = true;
         $('#arrow-' + t).css({
@@ -1110,9 +1280,8 @@ const Quiz = function (t) {
             });
         }, 1000);
         self.dunne();
-//        console.log(`${t} wins`);
         storeAggregate(t, 'win');
-        setTimeout(window.reset, 3000);
+        setTimeout(window.restart, 5000);
     };
     self.defeat = function () {
         clearTimeout(self.autoInt);
@@ -1122,12 +1291,19 @@ const Quiz = function (t) {
         self.dunne();
 //        console.log(`${t} loses`);
     };
+    self.endTimers = function () {
+        console.log('endTimers');
+        Object.keys(self.timers).forEach(t => {
+            clearTimeout(t);
+        });
+    };
     self.dunne = function () {
         $('#' + t).find('.question').addClass('dunne');
         $('#' + t).find('.option').addClass('dunne');
+        self.endTimers();
     };
     self.scoreFunk = function () {
-//        console.log('onScore');
+        console.log(`scoreFunk, self.scorePending: ${self.scorePending}, type: ${typeof(self.scorePending)}`);
         self.updateScorePending(self.scorePending + 1);
         self.showOverlay(false);
 //        self.showProgress(true);
@@ -1253,12 +1429,31 @@ let q2 = null;
 checkQuestionBankSet();
 let ts = new Timestamp();
 const reset = function () {
+    setup();
     for (var i in quizzes) {
         quizzes[i].reset();
     }
 }
+const restart = function () {
+    console.log('restart');
+    let pa = $('#playagain');
+    showTopping(true);
+//    showContent(false);
+    $('.content').hide();
+    pa.show();
+//    pa = pa.find('.button');
+    console.log(pa);
+    pa.removeClass('inactive');
+    pa.off('click');
+    pa.on('click', function () {
+        pa.addClass('inactive');
+        pa.fadeOut();
+        setTimeout(reset, 300);
+    })
+//    pa.show();
+}
 const go = function () {
-    console.log('GO!');
+//    console.log('GO!');
     showIntro(false);
 //    showTopping(false);
     theCountdown();
@@ -1273,6 +1468,7 @@ const startQuiz = function () {
     }
 }
 window.reset = reset;
+window.restart = restart;
 window.go = go;
 window.setup = setup;
 reset();

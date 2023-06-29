@@ -66,7 +66,7 @@ body {
     height: 100%;
     min-height: 100%;
     background-color: rgba(52, 103, 141, 0.68);
-    z-index: 99;
+    z-index: 9999999;
     font-weight: bold;
     font-size: 1.2em;
 }
@@ -81,6 +81,7 @@ body {
     height: 470px;
 }
 #topping .bg {
+    position: absolute;
     width: 100%;
     height: 100%;
     background-color: #27b9e5;
@@ -106,17 +107,29 @@ body {
     left: 5%;
 /*    background-color: red;*/
 }
+#topping .introbuttons .settings {
+/*    background-color: red;*/
+    height: 180px;
+}
 #topping .large:hover {
     background-color: #ff2677;
 }
+
 #topping .large {
     position: relative;
     width: 300px;
     height: 180px;
+/*    height: 160px;*/
     background-color: #D1356F;
     border: 3px solid white;
     border-radius: 50px;
     margin: 0px auto;
+}
+#topping .start {
+    height: 140px;
+    position: absolute;
+    left: calc(50% - 150px);
+    display: none;
 }
 #topping .large.selected {
     background-color: #f8015e;
@@ -143,7 +156,7 @@ body {
     position: relative;
 /*    left: 20px;*/
     margin: 30px auto;
-    padding: 20px;
+/*    padding: 20px;*/
     width: 300px;
 /*    background-color: blue;*/
 }
@@ -231,6 +244,11 @@ body {
 .screentype#type2 {
     background-image: url(../assets/wallmounted.png);
 }
+#typewallmounted .button.inactive  {
+    opacity: 0.3;
+/*    pointer-events: none;*/
+/*    cursor: default;*/
+}
 .screentype#type1.selected {
     background-image: url(../assets/tabletopselected.png);
 }
@@ -254,16 +272,24 @@ body {
     width: 100%
 }
 .start .text {
-    bottom: 34px;
+    bottom: 40px;
+    font-size: 2.5em;
 }
-#start.large {
-    display: none;
-    position: absolute;
-    left: 700px;
-    top: 420px;
-    width: 200px;
-    height: 100px;
+#startplayer1.large {
+    top: -190px;
+/*    position: absolute;*/
+/*    transform: rotate(180deg);*/
 }
+#startplayer1.large.tabletop {
+    transform: rotate(180deg);
+}
+#startplayer2.large {
+/*    top: -510px;*/
+    top: 520px;
+/*    position: absolute;*/
+}
+
+
 #start.large .raised:after {
 /*    display: none;*/
     width: 73%;
@@ -273,6 +299,37 @@ body {
 #topping .large {
     background-repeat: no-repeat;
     background-position: 90px 25px;
+}
+#topping .start.selected .raised {
+    display: none;
+}
+#topping .start.selected {
+    background: rgb(59,176,209);
+    background: -webkit-linear-gradient(top, rgba(59,176,209,1) 0%, rgba(47,85,182,1) 100%);
+    background: -o-linear-gradient(top, rgba(59,176,209,1) 0%, rgba(47,85,182,1) 100%);
+    background: linear-gradient(to bottom, rgba(59,176,209,1) 0%, rgba(47,85,182,1) 100%);
+    background-position: 0px 0px;
+/*    background-image: url(../assets/big_tick.png);*/
+}
+#topping .start.selected .text {
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background-position: 110px 30px;
+    background-repeat: no-repeat;
+    background-image: url(../assets/big_tick.png);
+}
+
+#playagain {
+    position: absolute;
+    top: 400px;
+/*    display: none;*/
+}
+#playagain .text {
+/*    display: none;*/
+    top: 70px;
+    font-size: 2em;
 }
 #versus {
     background-image: url(../assets/versus.png);
@@ -492,6 +549,14 @@ body {
     background-color: #D1356F;
     background-color: white;
 }
+.player#player1 .underlay .header{
+    background-color: #D1356F;
+    background-color: white;
+    transform: scaleY(-1);
+/*    bottom: 0px;*/
+    top: calc(100% - 30px);
+    position: relative;
+}
 .headerarrow {
     position: absolute;
     left: 0px;
@@ -660,14 +725,46 @@ body {
 }
 /* The two rules below work in conjunction with each other, comment out both or neither */
 #player1 .underlay {
+/*    transform: rotate(180deg);*/
+}
+.player .underlay .qZone {
+    position: absolute;
+/*    background-color: green;*/
+    width: 100%;
+}
+.qZone {
+    position: absolute;
+/*    position: relative;*/
+}
+.qZone.tabletop {
+/*    display: none;*/
+}
+.header.tabletop {
+/*    display: none;*/
+    bottom: 0px;
+    top: 0px;
+    position: absolute;
+}
+#player1 .qZone.wallmounted {
+    transform: none;
+    top: 10px;
+}
+#player1 .qZone.tabletop {
     transform: rotate(180deg);
 }
-#player1 .overlay {
+#player1 .overlay.tabletop {
     top: -69px;
     top: 220px;
     transform: scaleY(-1);
+/*    display: none;*/
 }
-#player1 .overlay .text {
+#player1 .overlay.wallmounted {
+    top: -24px;
+/*    top: 220px;*/
+/*    transform: scaleY(-1);*/
+/*    display: none;*/
+}
+#player1 .overlay.tabletop .text {
 /*    display: none;*/
     transform: scaleX(-1);
 }
@@ -728,7 +825,7 @@ body {
 .topic_button.type4 {
     background-color: #091932;
 }
-.player1 .topic_button .button {
+.upsidedown .topic_button .button {
     transform: rotate(180deg);
 }
 .buttons td , .race td {

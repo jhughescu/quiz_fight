@@ -132,14 +132,14 @@ const ready = function (boo) {
     boo ? $('#rotator').hide() : '';
 //    debugger;
     boo ? bSet.show() : bSet.hide();
-    boo ? console.log('yes!') : console.log('no!!');
+//    boo ? console.log('yes!') : console.log('no!!');
 };
 const setCpuLevel = function (n) {
     let s = 0;
     if (n > 0) {
         s = 0.2 + (0.6 * (n / 3));
     }
-    console.log(`set cpu level to ${s}, n: ${n}`);
+//    console.log(`set cpu level to ${s}, n: ${n}`);
     cpuLevel =  s;
     if (q1) {
         q1.setSkillLevel(s);
@@ -152,6 +152,74 @@ const setCpuLevel = function (n) {
         ready(true);
     }
 };
+const StartButtonv1 = function (d) {
+    let self = {
+        div: $('#' + d),
+        roll: $('#' + d).find('.button')
+    };
+    const clickDefault = function () {
+        console.log('I clicked');
+    }
+    const onClick = function (f) {
+        self.div.on('click', f);
+        activate(false);
+    }
+    const activate = function (boo) {
+        console.log('act ' + boo)
+        if (boo) {
+            self.div.removeClass('inactive');
+            self.roll.removeClass('inactive');
+        } else {
+            self.div.addClass('inactive');
+            self.roll.addClass('inactive');
+        }
+    }
+    const select = function (boo) {
+
+    }
+    self.div.show();
+    onClick(clickDefault);
+    activate(true);
+    return self;
+}
+class NewButton {
+    constructor(id) {
+        this.carname = id;
+        this.div = $('#' + id);
+        this.but = $('#' + id).find('.button');
+    }
+    getDiv() {
+        return this.div;
+    }
+    activate(boo) {
+        if (boo) {
+            this.div.removeClass('inactive');
+            this.but.removeClass('inactive');
+        } else {
+            this.but.css({'opacity': '0.2'});
+            this.div.addClass('inactive');
+            this.but.addClass('inactive');
+        }
+    }
+    reveal(boo) {
+//        console.log(`show ${boo}`);
+        if (boo) {
+            this.div.show();
+        } else {
+            this.div.hide();
+        }
+    }
+}
+
+class StartButton extends NewButton {
+    constructor(id) {
+        super(id);
+    }
+//    show() {
+//        console.log(this.getDiv());
+//        return ', it is a ' + this.model;
+//    }
+}
 const setup = function () {
     let platformType = 0;
     let pre = [
@@ -191,6 +259,8 @@ const setup = function () {
         $('#start' + getMainPlayer()).removeClass(platforms.list.join(' '));
         $('#start' + getMainPlayer()).addClass(platforms.current);
         $('#type' + platformType).addClass('selected');
+        $('.typeselect').removeClass(platforms.list.join(' '));
+        $('.typeselect').addClass(platforms.current);
         ready(players.count > 0);
     };
     const setPlatformTypeV1 = function (t) {
@@ -215,6 +285,7 @@ const setup = function () {
         let pc = players.count;
         players.count = 0;
         $('.typeselect').removeClass('selected');
+        $('.start').removeClass('selected');
         $('#' + id).addClass('selected');
         if (id === 'versus') {
             $('#cpudifficulty').addClass('inactive');
@@ -247,7 +318,7 @@ const setup = function () {
             go();
         }, 5000);
     };
-    setPlatformType(0);
+    setPlatformType(1);
     setCpuLevel(0);
     preload(pre);
     $('#cpudifficulty').addClass('inactive');
@@ -275,11 +346,12 @@ const setup = function () {
 
     });
     $('.start').removeClass('selected inactive startselected');
-    $('.start').find('.text').show();
+//    $('.start').find('.text').show();
     $('.start').on('click', function () {
+//        alert('woa')
         $(this).addClass('selected inactive startselected');
-        $(this).find('.text').hide();
-        if ($('#intro').find('.startselected').length === players.count) {
+        $(this).find('.text').find('span').hide();
+        if ($('#intro').find('.startselected').length >= players.count) {
             go();
         }
 
@@ -298,7 +370,16 @@ const setup = function () {
         console.log(playerList);
     });
     $('#countdownwrapper').hide();
-    $('.start').hide();
+//    $('.start').hide();
+//    let sp1 = new StartButton('startplayer1');
+//    let sp2 = new StartButton('startplayer2');
+//    sp1.reveal(true);
+//    sp2.reveal(true);
+//    sp1.activate(false);
+//    sp2.activate(false);
+//    console.log('setup')
+//    console.log(sp1.show());
+
 //    $('.content').hide();
 //    $('#playagain').hide();
 //    $('#playagain').addClass('inactive');
@@ -655,7 +736,7 @@ const Quiz = function (t) {
 
         let s = self.score;
         let td = $($('.race').find('td')[s]);
-        console.log(`advP s is ${s} and there are ${$('.race').find('td').length} tds`);
+//        console.log(`advP s is ${s} and there are ${$('.race').find('td').length} tds`);
         //
         //
         //
@@ -683,11 +764,11 @@ const Quiz = function (t) {
             if (gap < 0) {
                 // player is being pushed back, set up new question:
                 self.setNewQuestionBank(questionBankSet[self.score]);
-                console.log('the advancePlayer method calls self.askQuestion!!');
+//                console.log('the advancePlayer method calls self.askQuestion!!');
                 if (self.score > 0) {
                     self.askQuestion();
                 } else {
-                    console.log('no, not doing that, we have reset');
+//                    console.log('no, not doing that, we have reset');
                 }
             }
         });
@@ -1435,20 +1516,20 @@ const reset = function () {
     }
 }
 const restart = function () {
-    console.log('restart');
+//    console.log('restart');
     let pa = $('#playagain');
     showTopping(true);
 //    showContent(false);
     $('.content').hide();
     pa.show();
 //    pa = pa.find('.button');
-    console.log(pa);
+//    console.log(pa);
     pa.removeClass('inactive');
     pa.off('click');
     pa.on('click', function () {
         pa.addClass('inactive');
         pa.fadeOut();
-        setTimeout(reset, 300);
+        setTimeout(reset, 1000);
     })
 //    pa.show();
 }
@@ -1471,4 +1552,4 @@ window.reset = reset;
 window.restart = restart;
 window.go = go;
 window.setup = setup;
-reset();
+//reset();

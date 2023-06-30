@@ -38,14 +38,14 @@
                     <tr>
 
                         <td>
-                            <div class='button large typeselect versus' id='versus'>
+                            <div class='button large typeselect versus tabletop' id='versus'>
                                 <div class='text'>Versus</div>
                                 <div class='raised '></div>
                             </div>
                         </td>
 
                         <td>
-                            <div class='button large typeselect oneplayer' id='oneplayer'>
+                            <div class='button large typeselect oneplayer tabletop' id='oneplayer'>
                                 <div class='text'>One Player</div>
                                 <div class='raised '></div>
                             </div>
@@ -90,11 +90,11 @@
                     </td></tr>
                 </tbody></table>
                 <div class='button large start tabletop' id='startplayer1'>
-                    <div class='text'>READY</div>
+                    <div class='text'><span>READY</span></div>
                     <div class='raised '></div>
                 </div>
                 <div class='button large start' id='startplayer2'>
-                    <div class='text'>READY</div>
+                    <div class='text'><span>READY</span></div>
                     <div class='raised '></div>
                 </div>
             </div>
@@ -288,7 +288,7 @@
 //            q2.setAutoComplete(true);
 //            q1.askQuestion();
 //            q2.askQuestion();
-            setup();
+            reset();
         };
 //        document.getElementById('debug').innerHTML = '<p>Build: ' + ts.timestamp.datetime + '</p>'
 //        $('#arrow-player1').css('width', '400px');

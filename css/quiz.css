@@ -298,7 +298,7 @@ body {
 }
 #topping .large {
     background-repeat: no-repeat;
-    background-position: 90px 25px;
+    background-position: 70px 2px;
 }
 #topping .start.selected .raised {
     display: none;
@@ -324,18 +324,24 @@ body {
 #playagain {
     position: absolute;
     top: 400px;
-/*    display: none;*/
+    display: none;
 }
 #playagain .text {
 /*    display: none;*/
     top: 70px;
     font-size: 2em;
 }
-#versus {
-    background-image: url(../assets/versus.png);
+#versus.tabletop {
+    background-image: url(../assets/versus.tabletop.png);
 }
-#oneplayer {
-    background-image: url(../assets/oneplayer.png);
+#versus.wallmounted {
+    background-image: url(../assets/versus.wallmounted.png);
+}
+#oneplayer.tabletop {
+    background-image: url(../assets/oneplayer.tabletop.png);
+}
+#oneplayer.wallmounted {
+    background-image: url(../assets/oneplayer.wallmounted.png);
 }
 #river {
     position: absolute;

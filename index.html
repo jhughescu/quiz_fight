@@ -17,6 +17,7 @@
 
 <body>
     <div id='debug'>
+        <div id='demo'><b>DEMONSTRATION PURPOSES ONLY</b></div>
         <div id='timestamp'></div>
         <div id='userInfo'></div>
         <div id='reset'>&#8593 reset</div>
@@ -176,7 +177,7 @@
             <div class='bg'></div>
         </div>
     </div>
-    <div id='winbanner'></div>
+    <div class='player1 tabletop' id='winbanner'></div>
     <div id='losebanner'></div>
     <div id='bg'></div>
     <div id='river'>
@@ -268,14 +269,13 @@
             'general knowledge'
         ];
 
-            addAllQuestionBanks();
+        addAllQuestionBanks();
         quizReady = function () {
             q1 = new Quiz('player1');
             q2 = new Quiz('player2');
             q1.setRival(q2);
             q2.setRival(q1);
             q1.setNewQuestionBank('entertainment');
-
             q2.setNewQuestionBank('entertainment');
             q1.setQuizType(2);
             q2.setQuizType(2);
@@ -288,6 +288,7 @@
 //            q2.setAutoComplete(true);
 //            q1.askQuestion();
 //            q2.askQuestion();
+//            setAutoplay(true);
             reset();
         };
 //        document.getElementById('debug').innerHTML = '<p>Build: ' + ts.timestamp.datetime + '</p>'

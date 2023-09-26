@@ -28,13 +28,18 @@ body {
     pointer-events: none;
 /*    : 30px;*/
     width: 400px;
-    height: 100px;
+    height: 140px;
     right: 20px;
     top: 20px;
     color: #060d2c;
     background-color: rgba(255, 255, 255, 0.67);
     z-index: 999999999;
+
 /*    margin: 20px*/
+}
+#debug #demo {
+    text-align: center;
+    font-size: 1.2em;
 }
 #debug div {
     padding: 5px;
@@ -488,8 +493,11 @@ body {
 }
 #winbanner.player1 {
     top: -250px;
-    transform: rotate(180deg);
+/*    transform: rotate(180deg);*/
     display: block;
+}
+#winbanner.tabletop {
+    transform: rotate(180deg);
 }
 #winbanner.player2 {
     bottom: -250px;
